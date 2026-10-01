@@ -1,0 +1,225 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 1px 6px rgba(15, 23, 42, 0.04);
+}
+
+.navbar-inner {
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 32px;
+  height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Left Spacer: balances right logo to keep middle navigation centered */
+.navbar-left-spacer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 160px;
+}
+
+/* Middle Navigation - Exactly 3 Clean Text Links */
+.navbar-nav-center {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-links-list {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 44px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-text-link {
+  color: #1e293b;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: -0.01em;
+  padding: 8px 0;
+  position: relative;
+  transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-text-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2.5px;
+  background: #0284c7;
+  border-radius: 2px;
+  transition: width 0.22s ease-in-out;
+}
+
+.nav-text-link:hover {
+  color: #0284c7;
+}
+
+.nav-text-link:hover::after,
+.nav-text-link.is-active::after {
+  width: 100%;
+}
+
+.nav-text-link.is-active {
+  color: #0284c7;
+}
+
+/* Right Corner - Cipla Logo (Increased Size & Far Right) */
+.navbar-right-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+  min-width: 160px;
+}
+
+.navbar-cipla-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.navbar-cipla-link:hover {
+  opacity: 0.88;
+  transform: scale(1.02);
+}
+
+.navbar-cipla-logo {
+  height: 58px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Mobile Hamburger Toggle */
+.navbar-hamburger {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 8px;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.2s ease;
+}
+
+.navbar-hamburger:hover {
+  background: #e2e8f0;
+}
+
+.hamburger-line {
+  width: 20px;
+  height: 2px;
+  background-color: #0f172a;
+  border-radius: 2px;
+  transition: all 0.25s ease-in-out;
+}
+
+.navbar-hamburger.is-active .hamburger-line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.navbar-hamburger.is-active .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar-hamburger.is-active .hamburger-line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile Drawer */
+.navbar-mobile-drawer {
+  display: none;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 16px 24px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.mobile-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: #1e293b;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.05rem;
+  background: #f8fafc;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.mobile-nav-link:hover {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+/* Responsive */
+@media (max-width: 820px) {
+  .navbar-nav-center {
+    display: none;
+  }
+
+  .navbar-left-spacer {
+    display: none;
+  }
+
+  .navbar-inner {
+    justify-content: space-between;
+  }
+
+  .navbar-hamburger {
+    display: flex;
+  }
+
+  .navbar-mobile-drawer {
+    display: block;
+    animation: drawerSlide 0.2s ease-out;
+  }
+}
+
+@keyframes drawerSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

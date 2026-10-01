@@ -1,0 +1,126 @@
+.footer {
+  background: #ffffff;
+  color: #334155;
+  border-top: 1px solid #e2e8f0;
+  margin-top: auto;
+  box-shadow: 0 -1px 4px rgba(15, 23, 42, 0.02);
+}
+
+.footer-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 40px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 36px;
+  flex-wrap: wrap;
+}
+
+/* Left: Brand Section */
+.footer-brand-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 480px;
+}
+
+.footer-brand-logo-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.footer-brand-logo-link:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.footer-brand-logo {
+  height: 48px;
+  width: auto;
+  max-width: 170px;
+  object-fit: contain;
+  display: block;
+}
+
+.footer-brand-desc {
+  color: #64748b;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Right: Navigation Links & Copyright */
+.footer-links-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.footer-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-menu-link {
+  color: #1e293b;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 4px 0;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.footer-menu-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #0284c7;
+  transition: width 0.2s ease;
+}
+
+.footer-menu-link:hover {
+  color: #0284c7;
+}
+
+.footer-menu-link:hover::after {
+  width: 100%;
+}
+
+.footer-link-divider {
+  color: #cbd5e1;
+  font-size: 0.85rem;
+  user-select: none;
+}
+
+.footer-copyright-text {
+  color: #94a3b8;
+  font-size: 0.86rem;
+  margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 32px 24px;
+    gap: 24px;
+  }
+
+  .footer-links-section {
+    align-items: flex-start;
+    width: 100%;
+    padding-top: 16px;
+    border-top: 1px solid #f1f5f9;
+  }
+}
