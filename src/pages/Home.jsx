@@ -540,57 +540,14 @@ function Home() {
         </div>
       )}
 
-      {/* ========== 6. NEED FOR TREATMENTS & IMPACT ON DAILY LIFE ========== */}
+      {/* ========== 6. NEED FOR TREATMENT TO IMPROVE QUALITY OF LIFE ========== */}
       <section id="treatment-need" className="block need-impact-section">
         <div className="container">
-          <div className="block__hd">
-            <span className="block__kicker">Clinical Significance &amp; Patient Well-Being</span>
-            <h2 className="block__title">Need for Treatment &amp; <span>Impact on Daily Life</span></h2>
-            <p className="block__lede">
-              A urethral stricture is a progressive condition. Beyond obstructed flow, delayed management places severe hydrostatic strain on the urinary tract and profoundly degrades everyday living.
-            </p>
-          </div>
-
-          {/* Need For Treatments: High Pressure & Infection */}
-          <div className="need-cards-grid">
-            <div className="need-card need-card--pressure">
-              <div className="need-card__icon-box">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-              </div>
-              <div className="need-card__body">
-                <span className="need-card__badge">High Outflow Pressure</span>
-                <h3 className="need-card__title">Elevated Bladder Pressure</h3>
-                <p className="need-card__desc">
-                  A stricture in the urethra significantly increases outflow resistance, forcing the bladder detrusor muscle to exert intense pressure to pass urine. Over time, this leads to muscular exhaustion, bladder wall thickening, and eventual detrusor decompensation.
-                </p>
-              </div>
-            </div>
-
-            <div className="need-card need-card--infection">
-              <div className="need-card__icon-box">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  <path d="M12 8v4M12 16h.01" />
-                </svg>
-              </div>
-              <div className="need-card__body">
-                <span className="need-card__badge">Infection &amp; Organ Risk</span>
-                <h3 className="need-card__title">Stagnant Urine &amp; Systemic Risks</h3>
-                <p className="need-card__desc">
-                  Due to incomplete voiding, accumulation of stagnant residual urine takes place in the bladder. This persistent pooling makes you highly prone to recurrent urinary tract infections (cystitis), chronic prostatitis, bladder calculi, and ascending kidney infections or disease.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Impact on Daily Life (Quality of Life) */}
+          {/* 1. IMPACT ON DAILY LIFE (QUALITY OF LIFE) */}
           <div className="qol-container">
             <div className="qol-header">
               <span className="qol-header__kicker">Quality of Life (QOL)</span>
-              <h3 className="qol-header__title">How Urethral Stricture Impacts Daily Living</h3>
+              <h2 className="qol-header__title">How Urethral Stricture Impacts Daily Living</h2>
               <p className="qol-header__desc">
                 The Quality of Life (QOL) is severely impacted due to its negative impact on the emotional, social, and physical well-being of the patient and family:
               </p>
@@ -652,6 +609,49 @@ function Home() {
                 </div>
                 <h4 className="qol-card__title">Emotional Stress</h4>
                 <p className="qol-card__text">Living with chronic urinary impairment and anxiety of sudden catheterization generates immense emotional distress.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* 2. NEED FOR TREATMENT TO IMPROVE QUALITY OF LIFE */}
+          <div className="block__hd need-treatment-hd">
+            <span className="block__kicker">Clinical Significance &amp; Patient Well-Being</span>
+            <h2 className="block__title">Need for Treatment to <span>Improve Quality of Life</span></h2>
+            <p className="block__lede">
+              A urethral stricture is a progressive condition. Beyond obstructed flow, delayed management places severe hydrostatic strain on the urinary tract and profoundly degrades everyday living.
+            </p>
+          </div>
+
+          <div className="need-cards-grid">
+            <div className="need-card need-card--pressure">
+              <div className="need-card__icon-box">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </div>
+              <div className="need-card__body">
+                <span className="need-card__badge">High Outflow Pressure</span>
+                <h3 className="need-card__title">Elevated Bladder Pressure</h3>
+                <p className="need-card__desc">
+                  A stricture in the urethra significantly increases outflow resistance, forcing the bladder detrusor muscle to exert intense pressure to pass urine. Over time, this leads to muscular exhaustion, bladder wall thickening, and eventual detrusor decompensation.
+                </p>
+              </div>
+            </div>
+
+            <div className="need-card need-card--infection">
+              <div className="need-card__icon-box">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <path d="M12 8v4M12 16h.01" />
+                </svg>
+              </div>
+              <div className="need-card__body">
+                <span className="need-card__badge">Infection &amp; Organ Risk</span>
+                <h3 className="need-card__title">Stagnant Urine &amp; Systemic Risks</h3>
+                <p className="need-card__desc">
+                  Due to incomplete voiding, accumulation of stagnant residual urine takes place in the bladder. This persistent pooling makes you highly prone to recurrent urinary tract infections (cystitis), chronic prostatitis, bladder calculi, and ascending kidney infections or disease.
+                </p>
               </div>
             </div>
           </div>
@@ -839,21 +839,6 @@ function Home() {
             </p>
           </div>
 
-          <div className="care-premium__ribbon">
-            <div className="care-ribbon-seg care-ribbon-seg--warn">
-              <span className="care-ribbon-seg__pct">~50%</span>
-              <span className="care-ribbon-seg__lbl">Dilation Recurrence</span>
-            </div>
-            <div className="care-ribbon-seg care-ribbon-seg--danger">
-              <span className="care-ribbon-seg__pct">70–80%</span>
-              <span className="care-ribbon-seg__lbl">Urethrotomy Recurrence</span>
-            </div>
-            <div className="care-ribbon-seg care-ribbon-seg--dark">
-              <span className="care-ribbon-seg__pct">4+</span>
-              <span className="care-ribbon-seg__lbl">Urethroplasty Risks</span>
-            </div>
-          </div>
-
           <div className="care-premium__grid">
             <article className="care-mod-card care-mod-card--1">
               <div className="care-mod-card__top">
@@ -970,7 +955,7 @@ function Home() {
         </div>
       </section>
 
-      {/* ========== 9. NOVEL TREATMENT: XTIKTR™ CELL THERAPY (PREMIUM REDESIGN) ========== */}
+      {/* ========== 9. NOVEL TREATMENT: AALBEC CELL THERAPY (PREMIUM REDESIGN) ========== */}
       <section id="novel-cell-therapy" className="block xtiktr-premium">
         <div className="container">
 
@@ -989,7 +974,7 @@ function Home() {
             </div>
 
             <h2 className="xtiktr-hero-prime__title">
-              Novel Treatment of Urethral Stricture Using <span className="xtiktr-brand">XTIKTR™</span>
+              Evolving Treatment Options to Augment the Current Practices in Management of Urethral Stricture
             </h2>
             <p className="xtiktr-hero-prime__sub">
               Autologous Adult Live Cultured Buccal Epithelial Cells — A Breakthrough Biological Restoration for Bulbar Urethral Strictures.
@@ -997,7 +982,7 @@ function Home() {
 
             <div className="xtiktr-hero-prime__lead">
               <p>
-                <strong>XTIKTR™</strong> is indicated to treat patients with <strong>Bulbar Urethral Strictures</strong>. It is India's first regenerative cell therapy that repairs the strictured urethra using the patient's own cells (<strong>Autologous</strong>) through a natural, biological, and non-destructive method.
+                <strong>AALBEC</strong> is indicated to treat patients with <strong>Bulbar Urethral Strictures</strong>. It is India's first regenerative cell therapy that repairs the strictured urethra using the patient's own cells (<strong>Autologous</strong>) through a natural, biological, and non-destructive method.
               </p>
             </div>
 
@@ -1022,26 +1007,6 @@ function Home() {
           </div>
 
           <div className="xtiktr-info-duo">
-            <div className="xtiktr-info-card-prime xtiktr-info-card-prime--indication">
-              <div className="xtiktr-info-card-prime__corner" />
-              <div className="xtiktr-info-card-prime__head">
-                <div className="xtiktr-info-card-prime__icon">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                    <polyline points="22 4 12 14.01 9 11.01" />
-                  </svg>
-                </div>
-                <span className="xtiktr-info-card-prime__chip">Approved Indication</span>
-              </div>
-              <h3 className="xtiktr-info-card-prime__title">Who Can Receive XTIKTR™?</h3>
-              <p className="xtiktr-info-card-prime__desc">
-                Specifically approved for the treatment of <strong>bulbar urethral stricture of at least 1–2 cm in length</strong> in adult males within the age group of <strong>18–56 years</strong>.
-              </p>
-              <div className="xtiktr-info-card-prime__pill">
-                <span>Nature:</span> Autologous (Self) Regenerative Biological Therapy
-              </div>
-            </div>
-
             <div className="xtiktr-info-card-prime xtiktr-info-card-prime--eligibility">
               <div className="xtiktr-info-card-prime__corner xtiktr-info-card-prime__corner--blue" />
               <div className="xtiktr-info-card-prime__head">
@@ -1066,7 +1031,7 @@ function Home() {
           <div className="xtiktr-process-prime">
             <div className="xtiktr-process-prime__head">
               <span className="block__kicker">Treatment Journey</span>
-              <h3>How XTIKTR™ Works</h3>
+              <h3>How AALBEC Works</h3>
               <p>From a minor outpatient oral tissue biopsy to targeted cellular engraftment at the stricture site — a carefully orchestrated 4-step process:</p>
             </div>
 
@@ -1153,7 +1118,7 @@ function Home() {
                     </svg>
                   </div>
                   <h4>Targeted Implantation</h4>
-                  <p>Implantation of adult live cultured buccal epithelial cells (XTIKTR™) at the stricture site in the same patient to trigger natural tissue regeneration.</p>
+                  <p>Implantation of adult live cultured buccal epithelial cells (AALBEC) at the stricture site in the same patient to trigger natural tissue regeneration.</p>
                 </div>
               </div>
             </div>
@@ -1162,7 +1127,7 @@ function Home() {
           <div className="xtiktr-outcomes-prime">
             <div className="xtiktr-outcomes-prime__head">
               <span className="block__kicker">Proven Therapeutic Advantages</span>
-              <h3>Positive Outcomes of XTIKTR™</h3>
+              <h3>Positive Outcomes of AALBEC</h3>
               <p>Restoring the natural urinary tract anatomy and returning patients to vibrant daily living — five transformative results:</p>
             </div>
             <div className="xtiktr-outcomes-prime__grid">
@@ -1239,12 +1204,12 @@ function Home() {
           <div className="xtiktr-trial-prime">
             <div className="xtiktr-trial-prime__head">
               <span className="block__kicker">Clinical Trial in India</span>
-              <h3>Success of XTIKTR™ — Clinical Trial Results</h3>
+              <h3>Success of AALBEC — Clinical Trial Results</h3>
               <p className="trial-prime__lead">
-                <strong>"XTIKTR™ Clinical Trial in India: Cure of urethral stricture with XTIKTR™ — Autologous Adult Live Cultured Buccal Epithelial Cells"</strong>
+                <strong>"AALBEC Clinical Trial in India: Cure of urethral stricture with AALBEC — Autologous Adult Live Cultured Buccal Epithelial Cells"</strong>
               </p>
               <p className="trial-prime__meta">
-                A prospective, open-label, multicentric clinical trial was conducted across premier hospitals in India to assess the safety and efficacy of Autologous Adult Live Cultured Buccal Epithelial Cells (XTIKTR™) in male patients with urethral stricture, following formal regulatory approval from the CDSCO (DCGI), Ministry of Health and Family Welfare, Government of India.
+                A prospective, open-label, multicentric clinical trial was conducted across premier hospitals in India to assess the safety and efficacy of Autologous Adult Live Cultured Buccal Epithelial Cells (AALBEC) in male patients with urethral stricture, following formal regulatory approval from the CDSCO (DCGI), Ministry of Health and Family Welfare, Government of India.
               </p>
             </div>
 
@@ -1276,15 +1241,9 @@ function Home() {
                   <h4>Clinical Conclusion</h4>
                 </div>
                 <p>
-                  Autologous Adult Live Cultured Buccal Epithelial Cells (XTIKTR™) is <strong>safe, effective, and well-tolerated</strong> with significant improvement in all parameters for urethral stricture disease in males. Patients' urinary excretory function and quality of life greatly improved.
+                  Autologous Adult Live Cultured Buccal Epithelial Cells (AALBEC) is <strong>safe, effective, and well-tolerated</strong> with significant improvement in all parameters for urethral stricture disease in males. Patients' urinary excretory function and quality of life greatly improved.
                 </p>
               </div>
-            </div>
-
-            <div className="trial-prime__stamp">
-              <p>
-                <strong>Official Approval:</strong> Cell Therapy (Brand name: <strong>XTIKTR™</strong>, in association with <strong>Cipla Ltd</strong>) is approved for the treatment of bulbar urethral stricture of at least 1–2 cm in length in males for age group 18–56 years by the <strong>Drugs Controller General of India (CDSCO)</strong>, Ministry of Health and Family Welfare, Government of India.
-              </p>
             </div>
           </div>
 

@@ -1,14 +1,12 @@
 /* Disclaimer Page Styles */
 .disclaimer-page {
-  background: #f8fafc;
+  background: #ffffff;
   min-height: 100vh;
   padding-bottom: 80px;
 }
 
 .disclaimer-hero {
-  background:
-    radial-gradient(80% 80% at 50% -10%, rgba(2, 132, 199, 0.1), transparent 70%),
-    linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  background: #ffffff;
   border-bottom: 1px solid #e2e8f0;
   padding: 56px 0 44px;
   text-align: center;

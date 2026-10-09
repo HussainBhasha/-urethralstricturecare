@@ -54,6 +54,7 @@
 .block__title span {
   background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
   font-weight: 800;
@@ -138,6 +139,7 @@
   display: block;
   background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 800;
 }
@@ -2779,7 +2781,7 @@
 }
 
 /* =========================================================
-   SECTION 6 — Need for Treatments & Impact on Daily Life
+   SECTION 6 — Quality of Life & Need for Treatment
    ========================================================= */
 .need-impact-section {
   background: #ffffff;
@@ -2790,7 +2792,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 28px;
-  margin-bottom: 40px;
+  margin-bottom: 0;
 }
 
 .need-card {
@@ -2906,42 +2908,63 @@
 
 /* Quality of Life (QOL) Box */
 .qol-container {
-  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 28px;
   padding: 38px 32px 34px;
-  box-shadow: inset 0 2px 6px rgba(15, 23, 42, 0.02);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+  margin-bottom: 56px;
 }
 
 .qol-header {
   text-align: center;
-  max-width: 680px;
+  max-width: 720px;
   margin: 0 auto 32px;
 }
 
 .qol-header__kicker {
-  font-size: 0.76rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #0284c7;
-  display: inline-block;
-  margin-bottom: 6px;
+  color: var(--clr-primary, #0284c7);
+  background: rgba(2, 132, 199, 0.08);
+  border: 1px solid rgba(2, 132, 199, 0.22);
+  padding: 5px 14px;
+  border-radius: 9999px;
+  margin-bottom: 12px;
 }
 
 .qol-header__title {
-  font-size: 1.45rem;
+  font-size: clamp(1.6rem, 2.4vw, 2.1rem);
   font-weight: 800;
-  color: #0f172a;
-  line-height: 1.3;
-  margin: 0 0 10px;
+  color: #000000;
+  line-height: 1.25;
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+}
+
+.qol-header__title span {
+  color: #000000;
+  -webkit-text-fill-color: #000000;
+  background: none;
 }
 
 .qol-header__desc {
-  font-size: 0.94rem;
+  font-size: 0.96rem;
   color: #64748b;
   line-height: 1.6;
-  margin: 0;
+  margin: 0 auto;
+  max-width: 660px;
+}
+
+.need-treatment-hd {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 36px;
 }
 
 .qol-grid {
@@ -3496,15 +3519,15 @@
 }
 
 /* =========================================================
-   SECTION 9 — Novel Treatment: XTIKTR™ Cell Therapy
+   SECTION 9 — Novel Treatment: AALBEC Cell Therapy
    ========================================================= */
 .xtiktr-section {
-  background: linear-gradient(180deg, #f0fdfa 0%, #ffffff 30%, #f8fafc 100%);
+  background: #ffffff;
   position: relative;
 }
 
 .xtiktr-hero-card {
-  background: radial-gradient(120% 100% at 0% 0%, #f0fdfa 0%, #ffffff 50%, #eff6ff 100%);
+  background: #ffffff;
   border: 1px solid rgba(13, 148, 136, 0.28);
   border-radius: 28px;
   box-shadow: 0 16px 40px -10px rgba(13, 148, 136, 0.12), 0 4px 14px -2px rgba(15, 23, 42, 0.04);
@@ -3581,6 +3604,7 @@
 .xtiktr-hero-title span {
   background: linear-gradient(135deg, #0d9488 0%, #0284c7 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
   font-weight: 800;
@@ -4361,9 +4385,7 @@
    PREMIUM REDESIGN: SECTION 7 — Diagnosis
    ========================================================= */
 .diag-premium {
-  background:
-    radial-gradient(120% 60% at 100% 0%, rgba(56, 189, 248, 0.08), transparent 60%),
-    linear-gradient(180deg, #ffffff 0%, #f0f9ff 60%, #ffffff 100%);
+  background: #ffffff;
   position: relative;
   padding-bottom: 88px;
 }
@@ -4389,6 +4411,7 @@
 .diag-premium__title span {
   background: linear-gradient(135deg, #0284c7 0%, #0d9488 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 800;
 }
@@ -4420,6 +4443,7 @@
   font-size: 1.6rem;
   background: linear-gradient(135deg, #0284c7, #0d9488);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   line-height: 1;
 }
@@ -4716,6 +4740,7 @@
   font-size: 1.8rem;
   background: linear-gradient(135deg, #cbd5e1, #94a3b8);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   line-height: 1;
   opacity: 0.8;
@@ -4724,6 +4749,7 @@
 .diag-other-card:hover .diag-other-card__num {
   background: linear-gradient(135deg, #0284c7, #0d9488);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .diag-other-card__head {
@@ -4819,9 +4845,7 @@
    PREMIUM REDESIGN: SECTION 8 — Standard of Care
    ========================================================= */
 .care-premium {
-  background:
-    radial-gradient(120% 60% at 0% 100%, rgba(239, 68, 68, 0.06), transparent 60%),
-    linear-gradient(180deg, #ffffff 0%, #fefaf7 50%, #ffffff 100%);
+  background: #ffffff;
   padding-bottom: 88px;
 }
 .care-premium__header {
@@ -4841,6 +4865,7 @@
 .care-premium__title span {
   background: linear-gradient(135deg, #dc2626 0%, #b91c1c 50%, #78350f 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .care-premium__lede {
@@ -4943,12 +4968,13 @@
   font-size: 2.2rem;
   background: linear-gradient(135deg, #cbd5e1, #94a3b8);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   line-height: 1;
 }
-.care-mod-card--1 .care-mod-card__num { background: linear-gradient(135deg, #fbbf24, #d97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.care-mod-card--2 .care-mod-card__num { background: linear-gradient(135deg, #f87171, #dc2626); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.care-mod-card--3 .care-mod-card__num { background: linear-gradient(135deg, #64748b, #1e293b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.care-mod-card--1 .care-mod-card__num { background: linear-gradient(135deg, #fbbf24, #d97706); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.care-mod-card--2 .care-mod-card__num { background: linear-gradient(135deg, #f87171, #dc2626); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.care-mod-card--3 .care-mod-card__num { background: linear-gradient(135deg, #64748b, #1e293b); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 
 .care-tag {
   font-size: 0.68rem;
@@ -5085,10 +5111,7 @@
    PREMIUM REDESIGN: SECTION 9 — XTIKTR Cell Therapy
    ========================================================= */
 .xtiktr-premium {
-  background:
-    radial-gradient(140% 80% at 50% 0%, rgba(13, 148, 136, 0.08), transparent 60%),
-    radial-gradient(100% 80% at 0% 100%, rgba(2, 132, 199, 0.07), transparent 60%),
-    linear-gradient(180deg, #ffffff 0%, #f0fdfa 25%, #ffffff 70%, #eff6ff 100%);
+  background: #ffffff;
   padding-bottom: 96px;
   position: relative;
 }
@@ -5098,29 +5121,15 @@
   position: relative;
   padding: 44px 42px 40px;
   border-radius: 32px;
-  background:
-    linear-gradient(135deg, #ffffff 0%, #ffffff 30%, #ecfeff 70%, #f0fdfa 100%);
-  border: 1px solid rgba(13, 148, 136, 0.22);
-  box-shadow: 0 28px 70px -30px rgba(13, 148, 136, 0.25), 0 6px 20px -4px rgba(2, 132, 199, 0.08);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.06);
   margin-bottom: 42px;
   overflow: hidden;
   text-align: center;
 }
 .xtiktr-hero-prime__glow {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(2px);
-  pointer-events: none;
-}
-.xtiktr-hero-prime__glow--a {
-  top: -80px; left: -60px;
-  width: 280px; height: 280px;
-  background: radial-gradient(circle, rgba(13, 148, 136, 0.16), transparent 70%);
-}
-.xtiktr-hero-prime__glow--b {
-  bottom: -90px; right: -60px;
-  width: 320px; height: 320px;
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.14), transparent 70%);
+  display: none;
 }
 .xtiktr-hero-prime__badges {
   position: relative;
@@ -5229,11 +5238,11 @@
   align-items: center;
   gap: 16px;
   padding: 18px 20px;
-  background: linear-gradient(135deg, #ffffff, #f8fafc);
+  background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 20px;
   text-align: left;
-  box-shadow: 0 4px 14px -6px rgba(15, 23, 42, 0.1);
+  box-shadow: 0 4px 14px -6px rgba(15, 23, 42, 0.08);
 }
 .approval-tile__icon {
   width: 56px; height: 56px;
@@ -5273,10 +5282,13 @@
 
 /* Info duo */
 .xtiktr-info-duo {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 26px;
+  display: flex;
+  justify-content: center;
   margin-bottom: 50px;
+}
+.xtiktr-info-duo .xtiktr-info-card-prime {
+  width: 100%;
+  max-width: 680px;
 }
 .xtiktr-info-card-prime {
   position: relative;
@@ -5799,7 +5811,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
-  margin-bottom: 24px;
+  margin-bottom: 0;
 }
 .finding-prime {
   position: relative;
@@ -5878,7 +5890,9 @@
 }
 
 /* References */
-.xtiktr-refs-prime { }
+.xtiktr-refs-prime {
+  position: relative;
+}
 .refs-prime-toggle {
   width: 100%;
   display: flex;
