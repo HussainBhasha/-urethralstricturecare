@@ -31,7 +31,7 @@ function Footer() {
         <div className="footer-links-section">
           <nav className="footer-nav-menu" aria-label="Footer Quick Links">
             <Link to="/" className="footer-menu-link">
-              Home
+              Urethral Stricture
             </Link>
             <span className="footer-link-divider" aria-hidden="true">•</span>
             <Link to="/faqs" className="footer-menu-link">

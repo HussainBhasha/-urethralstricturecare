@@ -28,7 +28,7 @@ function Navbar() {
                 }
                 onClick={closeMobileMenu}
               >
-                Home
+                Urethral Stricture
               </NavLink>
             </li>
             <li>
@@ -99,7 +99,7 @@ function Navbar() {
                 }
                 onClick={closeMobileMenu}
               >
-                Home
+                Urethral Stricture
               </NavLink>
             </li>
             <li>

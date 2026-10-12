@@ -11,10 +11,22 @@ import injuryImg from '../assets/Injury.jpeg';
 import infectionImg from '../assets/Infection.jpeg';
 import iatrogenicImg from '../assets/Iatrogenic.jpeg';
 import idiopathicImg from '../assets/Idiopathic.jpeg';
-import weakFlowImg from '../assets/Weak urine flow.jpeg';
-import painUrinationImg from '../assets/Pain during urination.jpeg';
-import strainingImg from '../assets/Straining to urinate.jpeg';
-import incompleteEmptyingImg from '../assets/Incomplete bladder emptying.jpeg';
+import weakUrinationVideo from '../assets/weak Urination.mp4';
+import painVideo from '../assets/pain.mp4';
+import strainingVideo from '../assets/straining.mp4';
+import bladderVideo from '../assets/bladder.mp4';
+import qolSleepImg from '../assets/sleep.jpeg';
+import qolRoutineImg from '../assets/work.jpeg';
+import qolEmotionImg from '../assets/Emotional well-being.jpeg';
+import qolSocialImg from '../assets/Social life.jpeg';
+import clinicalAssessmentImg from '../assets/clinical Assessment.jpeg';
+import diagImg from '../assets/diag.jpeg';
+import uroflowmetryImg from '../assets/Uroflowmetry.jpeg';
+import rugImagingImg from '../assets/RUG.jpeg';
+import vcugImagingImg from '../assets/VCUG.jpeg';
+import urethroscopyImg from '../assets/Urethroscopy.jpeg';
+import pvrUltrasoundImg from '../assets/PVR.jpeg';
+import labInvestigationImg from '../assets/Laboratory.jpeg';
 import './Home.css';
 
 const SYMPTOMS = [
@@ -22,7 +34,7 @@ const SYMPTOMS = [
     id: 'weak-urination',
     label: 'Weak urination',
     badge: 'Decreased Stream',
-    image: weakFlowImg,
+    video: weakUrinationVideo,
     shortDesc: 'Noticeable reduction in urinary velocity, often spraying, dribbling, or prolonged voiding.',
     clinicalNote: 'Caused by narrowed urethral caliber resisting urine discharge, resulting in an extended voiding duration and reduced flow rate (diminished Qmax).'
   },
@@ -30,7 +42,7 @@ const SYMPTOMS = [
     id: 'pain-during-urination',
     label: 'Pain during urination',
     badge: 'Dysuria / Discomfort',
-    image: painUrinationImg,
+    video: painVideo,
     shortDesc: 'Burning, stinging, or discomfort along the urethra or lower pelvis while voiding.',
     clinicalNote: 'Secondary mucosal inflammation, irritation, or localized infection upstream of the stricture causes dysuric pain during active urination.'
   },
@@ -38,7 +50,7 @@ const SYMPTOMS = [
     id: 'straining-to-urinate',
     label: 'Straining to urinate',
     badge: 'High Pressure',
-    image: strainingImg,
+    video: strainingVideo,
     shortDesc: 'Needing conscious abdominal strain or physical effort to push urine out.',
     clinicalNote: 'Patients compensate for outlet obstruction by bearing down with abdominal and pelvic musculature to force urine past the stricture.'
   },
@@ -46,7 +58,7 @@ const SYMPTOMS = [
     id: 'inability-to-empty-bladder',
     label: 'Inability to completely empty the bladder',
     badge: 'Post-Void Retention',
-    image: incompleteEmptyingImg,
+    video: bladderVideo,
     shortDesc: 'Persistent feeling of retained urine or sensation that the bladder never empties fully.',
     clinicalNote: 'Substantial post-void residual (PVR) volume remains trapped, increasing susceptibility to urinary tract infections (UTIs) and bladder calculi.'
   }
@@ -119,13 +131,15 @@ function Home() {
   const [showStrictureDetails, setShowStrictureDetails] = useState(false);
   const [selectedSymptom, setSelectedSymptom] = useState(null);
   const [showReferences, setShowReferences] = useState(false);
+  const [showConsultModal, setShowConsultModal] = useState(false);
 
   useEffect(() => {
-    if (!showStrictureDetails && !selectedSymptom) return;
+    if (!showStrictureDetails && !selectedSymptom && !showConsultModal) return;
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         setShowStrictureDetails(false);
         setSelectedSymptom(null);
+        setShowConsultModal(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -135,7 +149,7 @@ function Home() {
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = originalOverflow;
     };
-  }, [showStrictureDetails, selectedSymptom]);
+  }, [showStrictureDetails, selectedSymptom, showConsultModal]);
 
   return (
     <div className="page-wrap" id="home">
@@ -405,33 +419,16 @@ function Home() {
               <article
                 key={s.id}
                 className="symptom-card"
-                onClick={() => setSelectedSymptom(s)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setSelectedSymptom(s);
-                  }
-                }}
-                aria-label={`View clinical details for ${s.label}`}
               >
                 <div className="symptom-card__img-wrap">
-                  <img
-                    src={s.image}
-                    alt={s.label}
-                    className="symptom-card__img"
-                    loading="lazy"
+                  <video
+                    src={s.video}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="symptom-card__video"
                   />
-                  <div className="symptom-card__zoom-pill" title="Click to view details">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <circle cx="11" cy="11" r="8"></circle>
-                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                      <line x1="11" y1="8" x2="11" y2="14"></line>
-                      <line x1="8" y1="11" x2="14" y2="11"></line>
-                    </svg>
-                    <span>Inspect</span>
-                  </div>
                 </div>
                 <div className="symptom-card__body">
                   <div className="symptom-card__meta">
@@ -440,15 +437,6 @@ function Home() {
                   </div>
                   <h3 className="symptom-card__title">{s.label}</h3>
                   <p className="symptom-card__desc">{s.shortDesc}</p>
-                  <div className="symptom-card__footer">
-                    <span className="symptom-card__cta">
-                      <span>Examine anatomy &amp; details</span>
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                      </svg>
-                    </span>
-                  </div>
                 </div>
               </article>
             ))}
@@ -481,10 +469,14 @@ function Home() {
             <div className="symptom-modal-layout">
               <div className="symptom-modal-img-col">
                 <div className="symptom-modal-img-box">
-                  <img
-                    src={selectedSymptom.image}
-                    alt={selectedSymptom.label}
-                    className="symptom-modal-img"
+                  <video
+                    src={selectedSymptom.video}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    controls
+                    className="symptom-modal-img symptom-modal-video"
                   />
                 </div>
                 <div className="symptom-modal-img-badge">
@@ -540,117 +532,122 @@ function Home() {
         </div>
       )}
 
-      {/* ========== 6. NEED FOR TREATMENT TO IMPROVE QUALITY OF LIFE ========== */}
-      <section id="treatment-need" className="block need-impact-section">
-        <div className="container">
-          {/* 1. IMPACT ON DAILY LIFE (QUALITY OF LIFE) */}
-          <div className="qol-container">
-            <div className="qol-header">
-              <span className="qol-header__kicker">Quality of Life (QOL)</span>
-              <h2 className="qol-header__title">How Urethral Stricture Impacts Daily Living</h2>
-              <p className="qol-header__desc">
-                The Quality of Life (QOL) is severely impacted due to its negative impact on the emotional, social, and physical well-being of the patient and family:
-              </p>
+      {/* ========== SECTION 6 — IMPACT ON QUALITY OF LIFE ========== */}
+      <section id="quality-of-life" className="sec-block qol-section">
+        <div className="qol-section__ambient-mesh" aria-hidden="true" />
+        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+          <div className="block__hd qol-header">
+            <div className="qol-kicker-badge">
+              <span className="qol-kicker-dot" aria-hidden="true" />
+              <span>QUALITY OF LIFE</span>
             </div>
-
-            <div className="qol-grid">
-              <div className="qol-card">
-                <div className="qol-card__icon-wrap qol-card__icon--sleep">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                  </svg>
-                </div>
-                <h4 className="qol-card__title">Sleep Disturbances</h4>
-                <p className="qol-card__text">Frequent nocturnal awakenings (nocturia) disrupt restorative sleep cycles, resulting in chronic daytime fatigue.</p>
-              </div>
-
-              <div className="qol-card">
-                <div className="qol-card__icon-wrap qol-card__icon--social">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                  </svg>
-                </div>
-                <h4 className="qol-card__title">Diminished Social Life</h4>
-                <p className="qol-card__text">Preoccupation with bathroom accessibility and fear of sudden urinary leakage lead to social hesitation and isolation.</p>
-              </div>
-
-              <div className="qol-card">
-                <div className="qol-card__icon-wrap qol-card__icon--work">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                  </svg>
-                </div>
-                <h4 className="qol-card__title">Reduced Working Days</h4>
-                <p className="qol-card__text">Chronic urinary discomfort and recurrent clinic visits reduce working days, often causing direct loss of pay.</p>
-              </div>
-
-              <div className="qol-card">
-                <div className="qol-card__icon-wrap qol-card__icon--intimacy">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                  </svg>
-                </div>
-                <h4 className="qol-card__title">Impaired Sexual Intimacy</h4>
-                <p className="qol-card__text">Painful ejaculation, physical discomfort, and psychological worry compromise intimate relationships with one's partner.</p>
-              </div>
-
-              <div className="qol-card">
-                <div className="qol-card__icon-wrap qol-card__icon--stress">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M8 15s1.5-2 4-2 4 2 4 2"></path>
-                    <line x1="9" y1="9" x2="9.01" y2="9"></line>
-                    <line x1="15" y1="9" x2="15.01" y2="9"></line>
-                  </svg>
-                </div>
-                <h4 className="qol-card__title">Emotional Stress</h4>
-                <p className="qol-card__text">Living with chronic urinary impairment and anxiety of sudden catheterization generates immense emotional distress.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* 2. NEED FOR TREATMENT TO IMPROVE QUALITY OF LIFE */}
-          <div className="block__hd need-treatment-hd">
-            <span className="block__kicker">Clinical Significance &amp; Patient Well-Being</span>
-            <h2 className="block__title">Need for Treatment to <span>Improve Quality of Life</span></h2>
-            <p className="block__lede">
-              A urethral stricture is a progressive condition. Beyond obstructed flow, delayed management places severe hydrostatic strain on the urinary tract and profoundly degrades everyday living.
+            <h2 className="block__title qol-title">
+              How Urethral Strictures <span className="qol-title-gradient">Can Affect Daily Life</span>
+            </h2>
+            <p className="block__lede qol-lede">
+              Persistent urinary symptoms can interfere with everyday activities, rest and well-being. The impact varies from person to person.
             </p>
           </div>
 
-          <div className="need-cards-grid">
-            <div className="need-card need-card--pressure">
-              <div className="need-card__icon-box">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
+          <div className="qol-grid qol-grid--2x2">
+            {/* Row 1 - Left: Sleep and rest */}
+            <article className="qol-card qol-card--sleep">
+              <div className="qol-card__img-wrap">
+                <img
+                  src={qolSleepImg}
+                  alt="Sleep and rest"
+                  className="qol-card__img"
+                  loading="lazy"
+                />
+                <div className="qol-card__img-overlay" aria-hidden="true" />
+                <span className="qol-card__tag">Night Rest</span>
               </div>
-              <div className="need-card__body">
-                <span className="need-card__badge">High Outflow Pressure</span>
-                <h3 className="need-card__title">Elevated Bladder Pressure</h3>
-                <p className="need-card__desc">
-                  A stricture in the urethra significantly increases outflow resistance, forcing the bladder detrusor muscle to exert intense pressure to pass urine. Over time, this leads to muscular exhaustion, bladder wall thickening, and eventual detrusor decompensation.
+              <div className="qol-card__body">
+                <h3 className="qol-card__title">Sleep and rest</h3>
+                <p className="qol-card__desc">
+                  Nighttime urinary symptoms may interrupt sleep.
                 </p>
               </div>
-            </div>
+              <div className="qol-card__accent-bar" aria-hidden="true" />
+            </article>
 
-            <div className="need-card need-card--infection">
-              <div className="need-card__icon-box">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            {/* Row 1 - Right: Work and routines */}
+            <article className="qol-card qol-card--work">
+              <div className="qol-card__img-wrap">
+                <img
+                  src={qolRoutineImg}
+                  alt="Work and routines"
+                  className="qol-card__img"
+                  loading="lazy"
+                />
+                <div className="qol-card__img-overlay" aria-hidden="true" />
+                <span className="qol-card__tag">Routines</span>
+              </div>
+              <div className="qol-card__body">
+                <h3 className="qol-card__title">Work and routines</h3>
+                <p className="qol-card__desc">
+                  Urinary difficulties may disrupt daily activities and work.
+                </p>
+              </div>
+              <div className="qol-card__accent-bar" aria-hidden="true" />
+            </article>
+
+            {/* Row 2 - Left: Emotional well-being */}
+            <article className="qol-card qol-card--emotion">
+              <div className="qol-card__img-wrap">
+                <img
+                  src={qolEmotionImg}
+                  alt="Emotional well-being"
+                  className="qol-card__img"
+                  loading="lazy"
+                />
+                <div className="qol-card__img-overlay" aria-hidden="true" />
+                <span className="qol-card__tag">Well-being</span>
+              </div>
+              <div className="qol-card__body">
+                <h3 className="qol-card__title">Emotional well-being</h3>
+                <p className="qol-card__desc">
+                  Persistent symptoms may lead to worry or frustration.
+                </p>
+              </div>
+              <div className="qol-card__accent-bar" aria-hidden="true" />
+            </article>
+
+            {/* Row 2 - Right: Social life */}
+            <article className="qol-card qol-card--social">
+              <div className="qol-card__img-wrap">
+                <img
+                  src={qolSocialImg}
+                  alt="Social life"
+                  className="qol-card__img"
+                  loading="lazy"
+                />
+                <div className="qol-card__img-overlay" aria-hidden="true" />
+                <span className="qol-card__tag">Social</span>
+              </div>
+              <div className="qol-card__body">
+                <h3 className="qol-card__title">Social life</h3>
+                <p className="qol-card__desc">
+                  Symptoms may affect comfort and confidence during daily activities.
+                </p>
+              </div>
+              <div className="qol-card__accent-bar" aria-hidden="true" />
+            </article>
+          </div>
+
+          {/* Clinical Guidance Banner */}
+          <div className="qol-advisory-banner">
+            <div className="qol-advisory-banner__left">
+              <div className="qol-advisory-banner__icon-wrap" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  <path d="M12 8v4M12 16h.01" />
+                  <path d="m9 12 2 2 4-4" />
                 </svg>
               </div>
-              <div className="need-card__body">
-                <span className="need-card__badge">Infection &amp; Organ Risk</span>
-                <h3 className="need-card__title">Stagnant Urine &amp; Systemic Risks</h3>
-                <p className="need-card__desc">
-                  Due to incomplete voiding, accumulation of stagnant residual urine takes place in the bladder. This persistent pooling makes you highly prone to recurrent urinary tract infections (cystitis), chronic prostatitis, bladder calculi, and ascending kidney infections or disease.
+              <div className="qol-advisory-banner__content">
+                <span className="qol-advisory-banner__label">Clinical Perspective</span>
+                <p className="qol-advisory-banner__text">
+                  Early evaluation can help patients understand their condition and discuss appropriate treatment options with a urologist.
                 </p>
               </div>
             </div>
@@ -658,638 +655,1732 @@ function Home() {
         </div>
       </section>
 
-      {/* ========== 7. DIAGNOSIS OF URETHRAL STRICTURE (PREMIUM REDESIGN) ========== */}
-      <section id="diagnosis" className="block diag-premium">
+      {/* ========== SECTION 7 — DIAGNOSIS OF URETHRAL STRICTURES ========== */}
+      <section id="diagnosis" className="sec-block sec-block--bg-white diag-section">
         <div className="container">
-          <div className="diag-premium__hero">
-            <div className="diag-premium__left">
-              <span className="block__kicker">Precision Clinical Workup</span>
-              <h2 className="diag-premium__title">
-                Diagnosis of <span>Urethral Stricture</span>
+          {/* 1. SECTION INTRODUCTION (Two-Column Layout) */}
+          <div className="diag-intro-grid">
+            {/* Left Column */}
+            <div className="diag-intro-left">
+              <span className="block__kicker">DIAGNOSIS AND CLINICAL EVALUATION</span>
+              <h2 className="diag-intro-heading">
+                How Is a Urethral Stricture <span>Diagnosed?</span>
               </h2>
-              <p className="diag-premium__lede">
-                Accurate diagnosis helps urologists visualize stricture location, caliber, and length to determine the most effective management path.
-              </p>
-              <div className="diag-premium__stat-row">
-                <div className="diag-stat-pill">
-                  <div className="diag-stat-pill__num">4</div>
-                  <div className="diag-stat-pill__lbl">Diagnostic Modalities</div>
+              <div className="diag-intro-copy">
+                <p className="diag-intro-lead">
+                  Diagnosing a urethral stricture involves more than identifying urinary symptoms. A urologist evaluates the patient's medical history, performs an appropriate clinical examination and recommends investigations to understand the location, length and severity of the narrowing.
+                </p>
+                <p className="diag-intro-sublead">
+                  These findings help the treating team assess urinary function, identify associated conditions and determine which treatment options may be appropriate for the individual patient.
+                </p>
+              </div>
+
+              <div className="diag-keypoints-list">
+                <div className="diag-keypoint-item">
+                  <div className="diag-keypoint-badge" aria-hidden="true">1</div>
+                  <div className="diag-keypoint-text">
+                    <strong>Understand symptoms and medical history.</strong>
+                  </div>
                 </div>
-                <div className="diag-stat-pill">
-                  <div className="diag-stat-pill__num">0</div>
-                  <div className="diag-stat-pill__lbl">Required for Uroflowmetry</div>
+                <div className="diag-keypoint-item">
+                  <div className="diag-keypoint-badge" aria-hidden="true">2</div>
+                  <div className="diag-keypoint-text">
+                    <strong>Identify the location and extent of the narrowing.</strong>
+                  </div>
+                </div>
+                <div className="diag-keypoint-item">
+                  <div className="diag-keypoint-badge" aria-hidden="true">3</div>
+                  <div className="diag-keypoint-text">
+                    <strong>Assess urinary function and plan appropriate treatment.</strong>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="diag-premium__right diag-hero-visual">
-              <div className="diag-hero-visual__ring diag-hero-visual__ring--1" />
-              <div className="diag-hero-visual__ring diag-hero-visual__ring--2" />
-              <div className="diag-hero-visual__center">
-                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+
+            {/* Right Column: Male Urinary Tract Anatomical Illustration */}
+            <div className="diag-intro-right">
+              <figure className="diag-anatomy-card">
+                <div className="diag-anatomy-media">
+                  <img 
+                    src={diagImg} 
+                    alt="Medical illustration showing the male urinary tract and a narrowed bulbar urethral segment."
+                    className="diag-anatomy-img"
+                    loading="lazy"
+                  />
+                  <span className="diag-anatomy-tag">Clinical Illustration</span>
+                </div>
+                <figcaption className="diag-anatomy-caption">
+                  <span className="diag-anatomy-caption__title">Male Urinary Tract Anatomy:</span>
+                  Depicting the urinary bladder, prostate, bulbar urethra, and focal stricture narrowing.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+
+          {/* 2. DIAGNOSTIC PROCESS: FOUR STAGES */}
+          <div className="diag-process-header">
+            <span className="block__kicker">CLINICAL PATHWAY</span>
+            <h3 className="diag-process-title">Understanding the Diagnostic Process</h3>
+            <p className="diag-process-lead">
+              Different assessments provide different pieces of information. Your urologist will decide which investigations are needed based on your symptoms, medical history and clinical findings.
+            </p>
+          </div>
+
+          <div className="diag-stages-row">
+            {/* STAGE 1 — Clinical Assessment */}
+            <article className="diag-stage-card">
+              <div className="diag-stage-card__header">
+                <span className="diag-stage-number">Stage 1</span>
+                <h4 className="diag-stage-card__title">Clinical Assessment</h4>
+              </div>
+              <div className="diag-stage-media">
+                <img 
+                  src={clinicalAssessmentImg} 
+                  alt="Urologist discussing urinary symptoms and medical history with a patient."
+                  className="diag-stage-img"
+                  loading="lazy"
+                />
+              </div>
+              <div className="diag-stage-card__body">
+                <p className="diag-stage-desc">
+                  The evaluation begins with a discussion of urinary symptoms, when they started, how they have changed and whether they have returned after previous treatment.
+                </p>
+                <div className="diag-stage-checklist-wrap">
+                  <span className="diag-stage-checklist-title">The urologist may review:</span>
+                  <ul className="diag-stage-checklist">
+                    <li>Previous urethral injuries or trauma.</li>
+                    <li>History of catheterization or urinary procedures.</li>
+                    <li>Previous treatments and recurrence of symptoms.</li>
+                    <li>Relevant medical conditions and surgical history.</li>
+                  </ul>
+                </div>
+                <p className="diag-stage-note">
+                  A physical examination may also be performed to assess the abdomen, bladder region, penis and perineum, with other examinations where clinically appropriate.
+                </p>
+              </div>
+            </article>
+
+            {/* STAGE 2 — Urinary Flow Assessment */}
+            <article className="diag-stage-card">
+              <div className="diag-stage-card__header">
+                <span className="diag-stage-number">Stage 2</span>
+                <h4 className="diag-stage-card__title">Uroflowmetry</h4>
+              </div>
+              <div className="diag-stage-media">
+                <img 
+                  src={uroflowmetryImg} 
+                  alt="Uroflowmetry equipment used to measure urinary flow."
+                  className="diag-stage-img"
+                  loading="lazy"
+                />
+              </div>
+              <div className="diag-stage-card__body">
+                <p className="diag-stage-desc">
+                  Uroflowmetry is a non-invasive investigation that measures the rate and pattern of urine flow during urination. The results may help identify a pattern of urinary obstruction and indicate whether further evaluation is needed.
+                </p>
+                <div className="diag-stage-checklist-wrap">
+                  <span className="diag-stage-checklist-title">The test may record:</span>
+                  <ul className="diag-stage-checklist">
+                    <li>Peak urinary flow rate.</li>
+                    <li>Overall flow pattern.</li>
+                    <li>Duration and characteristics of urination.</li>
+                  </ul>
+                </div>
+                <div className="diag-stage-caution-box">
+                  <strong>Clinical Notice:</strong> Uroflowmetry alone cannot confirm a urethral stricture. The results must be interpreted alongside the patient's symptoms and other clinical findings.
+                </div>
+              </div>
+            </article>
+
+            {/* STAGE 3 — Imaging and Anatomical Assessment */}
+            <article className="diag-stage-card diag-stage-card--col-span">
+              <div className="diag-stage-card__header">
+                <span className="diag-stage-number">Stage 3</span>
+                <h4 className="diag-stage-card__title">Imaging the Urethra</h4>
+              </div>
+              <div className="diag-stage-card__body">
+                <p className="diag-stage-desc">
+                  Imaging investigations help the urologist understand the location, length and number of strictures and assess the anatomy of the urinary passage.
+                </p>
+
+                <div className="diag-subcards-grid diag-subcards-grid--2col">
+                  {/* CARD A: RUG */}
+                  <div className="diag-subcard">
+                    <div className="diag-subcard-media">
+                      <img 
+                        src={rugImagingImg} 
+                        alt="Medical imaging used to evaluate the location and length of an anterior urethral stricture."
+                        className="diag-subcard-img"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="diag-subcard-body">
+                      <span className="diag-subcard-tag">Card A • Contrast Study</span>
+                      <h5 className="diag-subcard-title">Retrograde Urethrogram (RUG)</h5>
+                      <p className="diag-subcard-desc">
+                        RUG uses contrast imaging to visualize the anterior urethra. It helps identify the location, length and number of strictures and may be used when planning treatment or assessing recurrence.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* CARD B: VCUG */}
+                  <div className="diag-subcard">
+                    <div className="diag-subcard-media">
+                      <img 
+                        src={vcugImagingImg} 
+                        alt="Medical illustration of bladder and urethral imaging during voiding."
+                        className="diag-subcard-img"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="diag-subcard-body">
+                      <span className="diag-subcard-tag">Card B • Dynamic Voiding</span>
+                      <h5 className="diag-subcard-title">Voiding Cystourethrogram (VCUG)</h5>
+                      <p className="diag-subcard-desc">
+                        VCUG can help assess the posterior urethra and bladder during voiding. It may be used in selected complex or recurrent cases when additional anatomical information is required.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Compact Expandable Information Panel for Ultrasound Urethrography */}
+                <details className="diag-expandable-panel">
+                  <summary className="diag-expandable-summary">
+                    <div className="diag-expandable-summary-left">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="12" />
+                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                      </svg>
+                      <span className="diag-expandable-summary-text">Ultrasound Urethrography</span>
+                      <span className="diag-expandable-badge">Expand for Clinical Note</span>
+                    </div>
+                    <svg className="diag-expandable-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  </summary>
+                  <div className="diag-expandable-body">
+                    <p>
+                      Ultrasound urethrography may help assess the urethral wall and surrounding tissue, including the extent of spongiofibrosis, where appropriate. High-frequency sonography allows non-radiating evaluation of periurethral scar tissue depth and elasticity.
+                    </p>
+                  </div>
+                </details>
+              </div>
+            </article>
+
+            {/* STAGE 4 — Endoscopic and Additional Investigations */}
+            <article className="diag-stage-card diag-stage-card--col-span">
+              <div className="diag-stage-card__header">
+                <span className="diag-stage-number">Stage 4</span>
+                <h4 className="diag-stage-card__title">Detailed Assessment</h4>
+              </div>
+              <div className="diag-stage-card__body">
+                <p className="diag-stage-desc">
+                  Additional investigations may be required to examine the urethra directly, assess residual urine or identify associated conditions.
+                </p>
+
+                <div className="diag-subcards-grid diag-subcards-grid--3col">
+                  {/* CARD A: Endoscopy */}
+                  <div className="diag-subcard">
+                    <div className="diag-subcard-media">
+                      <img 
+                        src={urethroscopyImg} 
+                        alt="Medical illustration of endoscopic examination of the urethra."
+                        className="diag-subcard-img"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="diag-subcard-body">
+                      <span className="diag-subcard-tag">Card A • Endoscopy</span>
+                      <h5 className="diag-subcard-title">Urethroscopy or Cystourethroscopy</h5>
+                      <p className="diag-subcard-desc">
+                        An endoscopic examination allows the urologist to directly visualize the urethral narrowing and assess the surrounding mucosal condition. It may also help identify associated inflammation or stones and support treatment planning.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* CARD B: PVR */}
+                  <div className="diag-subcard">
+                    <div className="diag-subcard-media">
+                      <img 
+                        src={pvrUltrasoundImg} 
+                        alt="Ultrasound assessment of urine remaining in the bladder after urination."
+                        className="diag-subcard-img"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="diag-subcard-body">
+                      <span className="diag-subcard-tag">Card B • Bladder Volume</span>
+                      <h5 className="diag-subcard-title">Post-Void Residual (PVR)</h5>
+                      <p className="diag-subcard-desc">
+                        PVR assessment estimates the amount of urine remaining in the bladder after urination, commonly using ultrasound. The result may help evaluate incomplete bladder emptying.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* CARD C: Lab */}
+                  <div className="diag-subcard">
+                    <div className="diag-subcard-media">
+                      <img 
+                        src={labInvestigationImg} 
+                        alt="Laboratory investigations used during a urological assessment."
+                        className="diag-subcard-img"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="diag-subcard-body">
+                      <span className="diag-subcard-tag">Card C • Laboratory</span>
+                      <h5 className="diag-subcard-title">Laboratory Investigations</h5>
+                      <p className="diag-subcard-desc">
+                        Urine testing and culture may be used to investigate infection. Kidney function tests and other laboratory investigations may be recommended when clinically indicated.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          {/* 3. DIAGNOSTIC SUMMARY TABLE */}
+          <div className="diag-table-section">
+            <div className="diag-table-header">
+              <span className="block__kicker">CLINICAL REFERENCE</span>
+              <h3 className="diag-table-title">What Does Each Test Help Evaluate?</h3>
+              <p className="diag-table-lead">
+                A structured overview of each diagnostic assessment and its primary clinical purpose.
+              </p>
+            </div>
+
+            <div className="diag-table-wrapper">
+              <table className="diag-summary-table">
+                <thead>
+                  <tr>
+                    <th scope="col" className="diag-th-test">TEST</th>
+                    <th scope="col" className="diag-th-purpose">MAIN PURPOSE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="diag-td-test">
+                      <div className="diag-test-name">Clinical assessment</div>
+                    </td>
+                    <td className="diag-td-purpose">
+                      Reviews symptoms, medical history, previous treatments and examination findings.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="diag-td-test">
+                      <div className="diag-test-name">Uroflowmetry</div>
+                    </td>
+                    <td className="diag-td-purpose">
+                      Measures urinary flow rate and pattern.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="diag-td-test">
+                      <div className="diag-test-name">Retrograde urethrogram (RUG)</div>
+                    </td>
+                    <td className="diag-td-purpose">
+                      Evaluates the location, length and number of anterior urethral strictures.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="diag-td-test">
+                      <div className="diag-test-name">Voiding cystourethrogram (VCUG)</div>
+                    </td>
+                    <td className="diag-td-purpose">
+                      Helps assess the posterior urethra and bladder during voiding in selected cases.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="diag-td-test">
+                      <div className="diag-test-name">Urethroscopy or cystourethroscopy</div>
+                    </td>
+                    <td className="diag-td-purpose">
+                      Directly examines the urethra and its mucosal condition.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="diag-td-test">
+                      <div className="diag-test-name">Ultrasound urethrography</div>
+                    </td>
+                    <td className="diag-td-purpose">
+                      Evaluates the urethral wall and surrounding tissues, including fibrosis.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="diag-td-test">
+                      <div className="diag-test-name">Post-void residual measurement</div>
+                    </td>
+                    <td className="diag-td-purpose">
+                      Estimates urine remaining in the bladder after urination.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="diag-td-test">
+                      <div className="diag-test-name">Laboratory investigations</div>
+                    </td>
+                    <td className="diag-td-purpose">
+                      Help identify infection and assess other relevant clinical factors.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========== SECTION 8 — UNDERSTANDING TREATMENT OPTIONS ========== */}
+      <section id="treatment-options" className="sec-block sec-block--bg-soft treatment-options-section">
+        <div className="container">
+          {/* 1. SECTION HEADER (Two-column layout on desktop: Left Text, Right Medical Illustration) */}
+          <div className="treat-header-grid">
+            <div className="treat-header-content">
+              <span className="block__kicker">URETHRAL STRICTURE MANAGEMENT</span>
+              <h2 className="treat-main-title">
+                Understanding Treatment Options
+              </h2>
+              <p className="treat-main-lede">
+                Treatment for urethral stricture aims to restore urinary function, improve urinary flow, preserve urethral integrity, and minimize recurrence and its impact on quality of life. The most appropriate treatment depends on the location and length of the stricture, the degree of spongiofibrosis, its cause, previous treatments, recurrence pattern, and the patient's overall health.
+              </p>
+              <div className="treat-header-badges">
+                <span className="treat-badge">Individualized Clinical Assessment</span>
+                <span className="treat-badge">Evidence-Guided Decision Making</span>
+              </div>
+            </div>
+            <div className="treat-header-media">
+              <div className="treat-media-card">
+                <img
+                  src={diagImg}
+                  alt="Clinically accurate medical illustration of the male urinary tract showing the urethra and stricture site"
+                  className="treat-header-img"
+                  loading="lazy"
+                />
+                <div className="treat-media-caption">
+                  <span className="treat-media-caption__title">Male Urinary Tract &amp; Urethral Anatomy</span>
+                  <span className="treat-media-caption__sub">Clinical illustration highlighting urethral caliber, site of narrowing, and surrounding spongy tissue.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 2. TREATMENT OBJECTIVES (7 Goals in Card Grid) */}
+          <div className="treat-subblock">
+            <div className="treat-subblock-hd">
+              <span className="treat-subkicker">CORE CLINICAL OBJECTIVES</span>
+              <h3 className="treat-subblock-title">What Are the Goals of Treatment?</h3>
+              <p className="treat-subblock-desc">
+                The primary goal of managing urethral strictures is to restore normal urinary function while minimizing treatment-related morbidity, recurrence, and the impact on quality of life.
+              </p>
+            </div>
+
+            <div className="treat-goals-grid">
+              {/* Goal 1 */}
+              <div className="treat-goal-card">
+                <div className="treat-goal-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                  </svg>
+                </div>
+                <h4 className="treat-goal-title">Relieve Urinary Obstruction</h4>
+                <p className="treat-goal-desc">Improve urinary flow and address difficulties caused by narrowing of the urethra.</p>
+              </div>
+
+              {/* Goal 2 */}
+              <div className="treat-goal-card">
+                <div className="treat-goal-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="m4.93 4.93 4.24 4.24" />
+                    <path d="m14.83 14.83 4.24 4.24" />
+                    <path d="M14 10h4v4" />
+                    <path d="M10 14H6v-4" />
+                  </svg>
+                </div>
+                <h4 className="treat-goal-title">Restore Urethral Patency</h4>
+                <p className="treat-goal-desc">Re-establish urethral openness while preserving urethral integrity.</p>
+              </div>
+
+              {/* Goal 3 */}
+              <div className="treat-goal-card">
+                <div className="treat-goal-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                    <path d="M21 3v5h-5" />
+                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                    <path d="M3 21v-5h5" />
+                  </svg>
+                </div>
+                <h4 className="treat-goal-title">Address Recurrence</h4>
+                <p className="treat-goal-desc">Consider the underlying cause and recurrence pattern when selecting a treatment approach.</p>
+              </div>
+
+              {/* Goal 4 */}
+              <div className="treat-goal-card">
+                <div className="treat-goal-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <path d="m9 12 2 2 4-4" />
+                  </svg>
+                </div>
+                <h4 className="treat-goal-title">Prevent Complications</h4>
+                <p className="treat-goal-desc">Aim to reduce the risk of complications such as infections, bladder dysfunction, and renal damage.</p>
+              </div>
+
+              {/* Goal 5 */}
+              <div className="treat-goal-card">
+                <div className="treat-goal-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                </div>
+                <h4 className="treat-goal-title">Prevent or Delay Recurrence</h4>
+                <p className="treat-goal-desc">Select an appropriate management strategy based on the characteristics of the stricture and the patient's clinical history.</p>
+              </div>
+
+              {/* Goal 6 */}
+              <div className="treat-goal-card">
+                <div className="treat-goal-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="m14 2-8.5 8.5a2.12 2.12 0 0 0 3 3L17 5" />
+                    <path d="m16 4 4 4" />
+                    <path d="m19 7 1.5 1.5a2.12 2.12 0 0 1-3 3L6 23l-4-1 1-4 11.5-11.5" />
+                  </svg>
+                </div>
+                <h4 className="treat-goal-title">Minimize Surgical Morbidity</h4>
+                <p className="treat-goal-desc">Avoid or minimize treatment-related morbidity where clinically appropriate.</p>
+              </div>
+
+              {/* Goal 7 */}
+              <div className="treat-goal-card">
+                <div className="treat-goal-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                  </svg>
+                </div>
+                <h4 className="treat-goal-title">Improve Quality of Life</h4>
+                <p className="treat-goal-desc">Support better urinary function, daily comfort, and patient satisfaction.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* 3. FACTORS THAT INFLUENCE TREATMENT SELECTION */}
+          <div className="treat-subblock">
+            <div className="treat-subblock-hd">
+              <span className="treat-subkicker">INDIVIDUALIZED SELECTION CRITERIA</span>
+              <h3 className="treat-subblock-title">Every Stricture Requires an Individual Assessment</h3>
+              <p className="treat-subblock-desc">
+                Treatment selection is individualized according to the characteristics of the stricture and the patient's medical history. No single treatment is appropriate for every patient.
+              </p>
+            </div>
+
+            <div className="treat-factors-grid">
+              <div className="treat-factor-card">
+                <div className="treat-factor-head">
+                  <span className="treat-factor-num">01</span>
+                  <h4 className="treat-factor-title">Stricture Location</h4>
+                </div>
+                <p className="treat-factor-desc">Whether the stricture is bulbar, penile, or posterior anatomically influences procedure selection and tissue response.</p>
+              </div>
+
+              <div className="treat-factor-card">
+                <div className="treat-factor-head">
+                  <span className="treat-factor-num">02</span>
+                  <h4 className="treat-factor-title">Stricture Length</h4>
+                </div>
+                <p className="treat-factor-desc">The measured length of the narrowed urethral segment (e.g., short &lt;1.5–2 cm vs longer pan-urethral segments).</p>
+              </div>
+
+              <div className="treat-factor-card">
+                <div className="treat-factor-head">
+                  <span className="treat-factor-num">03</span>
+                  <h4 className="treat-factor-title">Degree of Spongiofibrosis</h4>
+                </div>
+                <p className="treat-factor-desc">The depth and density of fibrous scar tissue affecting the surrounding corpus spongiosum vascular bed.</p>
+              </div>
+
+              <div className="treat-factor-card">
+                <div className="treat-factor-head">
+                  <span className="treat-factor-num">04</span>
+                  <h4 className="treat-factor-title">Aetiology</h4>
+                </div>
+                <p className="treat-factor-desc">The underlying cause of narrowing—including straddle trauma, instrumentation, prior catheterization, infection, or idiopathic origins.</p>
+              </div>
+
+              <div className="treat-factor-card">
+                <div className="treat-factor-head">
+                  <span className="treat-factor-num">05</span>
+                  <h4 className="treat-factor-title">Recurrence Pattern</h4>
+                </div>
+                <p className="treat-factor-desc">Whether the stricture is primary (newly diagnosed) or recurrent following previous dilatation, urethrotomy, or reconstructive surgery.</p>
+              </div>
+
+              <div className="treat-factor-card">
+                <div className="treat-factor-head">
+                  <span className="treat-factor-num">06</span>
+                  <h4 className="treat-factor-title">Patient Factors</h4>
+                </div>
+                <p className="treat-factor-desc">Age, overall health, systemic comorbidities, baseline erectile/continence status, anesthetic tolerance, and prior treatment outcomes.</p>
+              </div>
+            </div>
+
+            <div className="treat-advisory-banner">
+              <div className="treat-advisory-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
                 </svg>
               </div>
+              <p className="treat-advisory-text">
+                <strong>Clinical Principle:</strong> No single treatment modality is suitable for every presentation. Treatment decisions must always be guided by comprehensive diagnostic evaluation and consultation with a qualified reconstructive urologist.
+              </p>
             </div>
           </div>
 
-          <div className="diag-premium__feature diag-uroflow">
-            <div className="diag-uroflow__left">
-              <div className="diag-uroflow__meta">
-                <span className="diag-badge diag-badge--primary">Primary Diagnostic</span>
-                <span className="diag-badge diag-badge--mint">Non-Invasive · Painless</span>
-              </div>
-              <h3 className="diag-uroflow__title">Uroflowmetry</h3>
-              <p className="diag-uroflow__intro">
-                Uroflowmetry is performed by urinating into a specialized funnel connected to an electronic measurement device that calculates flow dynamics in real time.
+          {/* 4. CONSERVATIVE AND MINIMALLY INVASIVE TREATMENT OPTIONS */}
+          <div className="treat-subblock">
+            <div className="treat-subblock-hd">
+              <span className="treat-subkicker">ENDOSCOPIC &amp; CONSERVATIVE SPECTRUM</span>
+              <h3 className="treat-subblock-title">Conservative and Minimally Invasive Approaches</h3>
+              <p className="treat-subblock-desc">
+                Several approaches may be considered depending on the length, location, and characteristics of the stricture, as well as the patient's previous treatment history and overall clinical condition.
               </p>
-              <p className="diag-uroflow__lead">
-                This instrument calculates the <strong>amount of urine passed</strong>, the <strong>rate of flow in seconds (mL/s)</strong>, and the <strong>length of time</strong> it takes to completely empty the bladder.
-              </p>
-              <div className="diag-uroflow__pillars">
-                <div className="diag-pillar">
-                  <div className="diag-pillar__icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                    </svg>
-                  </div>
-                  <div className="diag-pillar__body">
-                    <h4>Non-Invasive Diagnostic Test</h4>
-                    <p>Requires no catheterization, incisions, or radiation, providing a rapid and painless baseline assessment.</p>
+            </div>
+
+            <div className="treat-cards-triple">
+              {/* Card 1: Urethral Dilatation */}
+              <article className="treat-approach-card">
+                <div className="treat-approach-visual">
+                  <svg viewBox="0 0 320 160" className="treat-svg-diagram" aria-label="Illustration of urethral dilatation catheter mechanism">
+                    <rect width="320" height="160" fill="#f0f9ff" rx="12"/>
+                    <path d="M20 60 Q160 55 300 60 L300 100 Q160 105 20 100 Z" fill="#e0f2fe" stroke="#93c5fd" strokeWidth="1.5" />
+                    <path d="M120 60 Q160 74 200 60 L200 100 Q160 86 120 100 Z" fill="#cbd5e1" stroke="#94a3b8" strokeWidth="1.5" />
+                    <line x1="20" y1="80" x2="300" y2="80" stroke="#0284c7" strokeWidth="4" strokeLinecap="round" />
+                    <ellipse cx="160" cy="80" rx="36" ry="14" fill="#38bdf8" fillOpacity="0.75" stroke="#0284c7" strokeWidth="2" strokeDasharray="3 3"/>
+                    <line x1="160" y1="62" x2="160" y2="50" stroke="#0369a1" strokeWidth="2" />
+                    <line x1="160" y1="98" x2="160" y2="110" stroke="#0369a1" strokeWidth="2" />
+                    <text x="160" y="32" textAnchor="middle" fill="#0369a1" fontSize="11" fontWeight="700">Gradual Radial Dilatation</text>
+                    <text x="160" y="142" textAnchor="middle" fill="#64748b" fontSize="10">Balloon or Serial Sound Dilator</text>
+                  </svg>
+                  <span className="treat-approach-badge">Minimally Invasive</span>
+                </div>
+                <div className="treat-approach-body">
+                  <h4 className="treat-approach-name">Urethral Dilatation</h4>
+                  <p className="treat-approach-short">
+                    Urethral dilatation involves gradually widening the narrowed urethral segment using dilators or balloon devices.
+                  </p>
+                  <div className="treat-approach-keyinfo">
+                    <div className="treat-keyinfo-title">Key Information:</div>
+                    <ul className="treat-keyinfo-list">
+                      <li>May be considered for short, non-fibrotic strictures and in certain resource-limited settings.</li>
+                      <li>Involves gradual passage of dilators or balloon devices.</li>
+                      <li>The manual reports a recurrence rate of up to 60–80%.<span className="treat-footnote-sup">*</span></li>
+                      <li>Repeat treatment sessions may be required if lumen re-narrows.</li>
+                    </ul>
                   </div>
                 </div>
-                <div className="diag-pillar">
-                  <div className="diag-pillar__icon diag-pillar__icon--accent">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M3 3v18h18" />
-                      <path d="M7 14l4-4 4 4 5-5" />
-                    </svg>
-                  </div>
-                  <div className="diag-pillar__body">
-                    <h4>Calculates Flow Rate &amp; Duration</h4>
-                    <p>Detects classic stricture plateau patterns with reduced peak flow rate (Qmax &lt; 10-12 mL/s) vs. healthy curves.</p>
+              </article>
+
+              {/* Card 2: Visual Internal Urethrotomy (VIU) */}
+              <article className="treat-approach-card">
+                <div className="treat-approach-visual">
+                  <svg viewBox="0 0 320 160" className="treat-svg-diagram" aria-label="Illustration of visual internal urethrotomy endoscopic incision">
+                    <rect width="320" height="160" fill="#f8fafc" rx="12"/>
+                    <path d="M20 55 Q160 50 300 55 L300 105 Q160 110 20 105 Z" fill="#f1f5f9" stroke="#cbd5e1" strokeWidth="1.5" />
+                    <path d="M130 55 Q160 76 190 55 L190 105 Q160 84 130 105 Z" fill="#e2e8f0" stroke="#94a3b8" strokeWidth="1.5" />
+                    <rect x="20" y="74" width="135" height="12" rx="4" fill="#475569" />
+                    <circle cx="155" cy="80" r="5" fill="#38bdf8" />
+                    <line x1="155" y1="76" x2="175" y2="62" stroke="#dc2626" strokeWidth="3" strokeLinecap="round" />
+                    <line x1="160" y1="64" x2="185" y2="64" stroke="#dc2626" strokeWidth="1.5" strokeDasharray="2 2" />
+                    <text x="160" y="32" textAnchor="middle" fill="#0f172a" fontSize="11" fontWeight="700">Endoscopic Cold-Knife Incision</text>
+                    <text x="160" y="142" textAnchor="middle" fill="#64748b" fontSize="10">Direct Vision Internal Urethrotomy (VIU)</text>
+                  </svg>
+                  <span className="treat-approach-badge">Endoscopic</span>
+                </div>
+                <div className="treat-approach-body">
+                  <h4 className="treat-approach-name">Visual Internal Urethrotomy (VIU)</h4>
+                  <p className="treat-approach-short">
+                    Visual internal urethrotomy is an endoscopic procedure in which an incision is made at the site of the urethral stricture.
+                  </p>
+                  <div className="treat-approach-keyinfo">
+                    <div className="treat-keyinfo-title">Key Information:</div>
+                    <ul className="treat-keyinfo-list">
+                      <li>The manual describes it as an option for short bulbar strictures measuring less than 1.5 cm.</li>
+                      <li>It is minimally invasive and may allow a relatively quick recovery.</li>
+                      <li>Recurrence is common, particularly when the procedure is repeated.</li>
+                      <li>Its effectiveness is limited in penile, dense, or long strictures.</li>
+                    </ul>
                   </div>
                 </div>
+              </article>
+
+              {/* Card 3: Intermittent Self-Catheterization (ISC) */}
+              <article className="treat-approach-card">
+                <div className="treat-approach-visual">
+                  <svg viewBox="0 0 320 160" className="treat-svg-diagram" aria-label="Illustration of intermittent self-catheterization maintenance">
+                    <rect width="320" height="160" fill="#f0fdf4" rx="12"/>
+                    <path d="M20 62 C100 62 160 62 300 62 L300 98 C160 98 100 98 20 98 Z" fill="#dcfce7" stroke="#86efac" strokeWidth="1.5" />
+                    <path d="M30 80 Q160 80 270 80" stroke="#059669" strokeWidth="5" strokeLinecap="round" />
+                    <circle cx="270" cy="80" r="4.5" fill="#10b981" />
+                    <circle cx="258" cy="78" r="2" fill="#ffffff" />
+                    <text x="160" y="32" textAnchor="middle" fill="#065f46" fontSize="11" fontWeight="700">Scheduled Luminal Calibration</text>
+                    <text x="160" y="142" textAnchor="middle" fill="#64748b" fontSize="10">Lubricated Low-Friction Catheter</text>
+                  </svg>
+                  <span className="treat-approach-badge">Maintenance Protocol</span>
+                </div>
+                <div className="treat-approach-body">
+                  <h4 className="treat-approach-name">Intermittent Self-Catheterization (ISC)</h4>
+                  <p className="treat-approach-short">
+                    Intermittent self-catheterization may be used following a procedure or in selected patients who are not suitable candidates for surgery.
+                  </p>
+                  <div className="treat-approach-keyinfo">
+                    <div className="treat-keyinfo-title">Key Information:</div>
+                    <ul className="treat-keyinfo-list">
+                      <li>May be used as part of post-procedure management.</li>
+                      <li>May help maintain urethral opening in selected circumstances.</li>
+                      <li>Does not reverse the underlying stricture.</li>
+                      <li>The manual notes that it can reduce recurrence when used after VIU.</li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <p className="treat-card-note">
+              *Figures are reported in the source material (AALBEC Manual) and require clinical review before publication. Individual recurrence likelihood depends on stricture length and spongiofibrosis.
+            </p>
+          </div>
+
+          {/* 5. SURGICAL TREATMENT OPTIONS (Urethroplasty Reconstructive Techniques) */}
+          <div className="treat-subblock">
+            <div className="treat-subblock-hd">
+              <span className="treat-subkicker">RECONSTRUCTIVE UROLOGY</span>
+              <h3 className="treat-subblock-title">Surgical Approaches to Urethral Stricture</h3>
+              <p className="treat-subblock-desc">
+                Surgical treatment may be considered according to stricture length, location, complexity, previous treatment, and individual patient factors. Urethroplasty includes different reconstructive techniques selected according to the clinical situation.
+              </p>
+            </div>
+
+            <div className="treat-cards-triple">
+              {/* Card 1: EPA */}
+              <article className="treat-approach-card">
+                <div className="treat-approach-visual">
+                  <svg viewBox="0 0 320 160" className="treat-svg-diagram" aria-label="Illustration of excision and primary anastomosis urethroplasty">
+                    <rect width="320" height="160" fill="#f8fafc" rx="12"/>
+                    <path d="M30 65 L130 65 C145 65 145 95 130 95 L30 95 Z" fill="#e0e7ff" stroke="#6366f1" strokeWidth="1.5" />
+                    <path d="M190 65 L290 65 L290 95 L190 95 C175 95 175 65 190 65 Z" fill="#e0e7ff" stroke="#6366f1" strokeWidth="1.5" />
+                    <line x1="160" y1="55" x2="160" y2="105" stroke="#4f46e5" strokeWidth="2.5" strokeDasharray="3 3" />
+                    <circle cx="160" cy="65" r="3" fill="#4f46e5" />
+                    <circle cx="160" cy="80" r="3" fill="#4f46e5" />
+                    <circle cx="160" cy="95" r="3" fill="#4f46e5" />
+                    <text x="160" y="32" textAnchor="middle" fill="#3730a3" fontSize="11" fontWeight="700">Stricture Resected &amp; Ends Reconnected</text>
+                    <text x="160" y="142" textAnchor="middle" fill="#64748b" fontSize="10">End-to-End Anastomosis (Bulbar &lt; 2 cm)</text>
+                  </svg>
+                  <span className="treat-approach-badge">Reconstructive</span>
+                </div>
+                <div className="treat-approach-body">
+                  <h4 className="treat-approach-name">Excision and Primary Anastomosis (EPA)</h4>
+                  <p className="treat-approach-short">
+                    Excision and primary anastomosis involves removing the narrowed segment and reconnecting the healthy ends of the urethra.
+                  </p>
+                  <div className="treat-approach-keyinfo">
+                    <div className="treat-keyinfo-title">Key Information:</div>
+                    <ul className="treat-keyinfo-list">
+                      <li>The manual describes this technique for short bulbar strictures measuring less than 2 cm.</li>
+                      <li>It involves excision of the affected segment and end-to-end anastomosis.</li>
+                      <li>The source also associates urethroplasty with definitive treatment for long or recurrent strictures; the exact placement of this statement in the source requires confirmation before attributing it specifically to EPA.</li>
+                      <li>Potential risks mentioned in the manual include penile shortening and sexual dysfunction.</li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
+
+              {/* Card 2: Substitution Urethroplasty */}
+              <article className="treat-approach-card">
+                <div className="treat-approach-visual">
+                  <svg viewBox="0 0 320 160" className="treat-svg-diagram" aria-label="Illustration of substitution urethroplasty with buccal mucosa graft">
+                    <rect width="320" height="160" fill="#fdf4ff" rx="12"/>
+                    <path d="M25 70 L295 70 L295 95 L25 95 Z" fill="#fae8ff" stroke="#d946ef" strokeWidth="1.5" />
+                    <rect x="95" y="52" width="130" height="20" rx="4" fill="#f472b6" stroke="#db2777" strokeWidth="1.5" />
+                    <line x1="95" y1="71" x2="225" y2="71" stroke="#be185d" strokeWidth="2" strokeDasharray="4 3" />
+                    <text x="160" y="32" textAnchor="middle" fill="#831843" fontSize="11" fontWeight="700">Buccal Mucosa / Tissue Graft Onlay</text>
+                    <text x="160" y="142" textAnchor="middle" fill="#64748b" fontSize="10">Dorsal / Ventral / Lateral Augmentation</text>
+                  </svg>
+                  <span className="treat-approach-badge">Graft Reconstructive</span>
+                </div>
+                <div className="treat-approach-body">
+                  <h4 className="treat-approach-name">Substitution Urethroplasty</h4>
+                  <p className="treat-approach-short">
+                    Substitution urethroplasty uses graft tissue or a tissue flap to reconstruct the affected urethral segment.
+                  </p>
+                  <div className="treat-approach-keyinfo">
+                    <div className="treat-keyinfo-title">Key Information:</div>
+                    <ul className="treat-keyinfo-list">
+                      <li>May be considered for long-segment or recurrent strictures.</li>
+                      <li>Buccal mucosa grafts or skin flaps may be used.</li>
+                      <li>Grafts may be placed using dorsal, ventral, or lateral onlay techniques.</li>
+                      <li>The procedure requires surgical expertise and may involve hospitalization.</li>
+                      <li>It is more invasive than minimally invasive approaches but may provide durable outcomes in appropriately selected patients.</li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
+
+              {/* Card 3: Staged Urethroplasty */}
+              <article className="treat-approach-card">
+                <div className="treat-approach-visual">
+                  <svg viewBox="0 0 320 160" className="treat-svg-diagram" aria-label="Illustration of staged urethroplasty showing Stage 1 grafting and Stage 2 tubularization">
+                    <rect width="320" height="160" fill="#fefce8" rx="12"/>
+                    <rect x="25" y="45" width="125" height="60" rx="8" fill="#fef9c3" stroke="#eab308" strokeWidth="1.5"/>
+                    <text x="87" y="66" textAnchor="middle" fill="#854d0e" fontSize="11" fontWeight="700">Stage 1</text>
+                    <text x="87" y="86" textAnchor="middle" fill="#713f12" fontSize="9.5">Graft Inlay &amp; Quilted Bed</text>
+                    <line x1="156" y1="75" x2="168" y2="75" stroke="#ca8a04" strokeWidth="2.5" />
+                    <polygon points="168,71 174,75 168,79" fill="#ca8a04" />
+                    <rect x="175" y="45" width="120" height="60" rx="8" fill="#fef9c3" stroke="#eab308" strokeWidth="1.5"/>
+                    <text x="235" y="66" textAnchor="middle" fill="#854d0e" fontSize="11" fontWeight="700">Stage 2</text>
+                    <text x="235" y="86" textAnchor="middle" fill="#713f12" fontSize="9.5">Tubularization &amp; Closure</text>
+                    <text x="160" y="28" textAnchor="middle" fill="#713f12" fontSize="11" fontWeight="700">Complex Multiphase Reconstruction</text>
+                    <text x="160" y="142" textAnchor="middle" fill="#64748b" fontSize="10">Without Implying Fixed Interval Timeline</text>
+                  </svg>
+                  <span className="treat-approach-badge">Complex Staged</span>
+                </div>
+                <div className="treat-approach-body">
+                  <h4 className="treat-approach-name">Staged Urethroplasty</h4>
+                  <p className="treat-approach-short">
+                    Staged urethroplasty is a reconstructive approach that may be used for complex urethral strictures.
+                  </p>
+                  <div className="treat-approach-keyinfo">
+                    <div className="treat-keyinfo-title">Key Information:</div>
+                    <ul className="treat-keyinfo-list">
+                      <li>May be considered in selected complex cases, including failed repairs, lichen sclerosus, or trauma.</li>
+                      <li>Reconstruction may involve an initial grafting stage followed by a later stage to complete the urethral reconstruction.</li>
+                      <li>The treatment plan depends on the complexity of the condition and the patient's clinical assessment.</li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          {/* 6. OTHER TREATMENT APPROACHES (Stents & Perineal Urethrostomy) */}
+          <div className="treat-subblock">
+            <div className="treat-subblock-hd">
+              <span className="treat-subkicker">SPECIALIZED CLINICAL SCENARIOS</span>
+              <h3 className="treat-subblock-title">Additional Treatment Approaches</h3>
+              <p className="treat-subblock-desc">
+                These are selected treatment approaches used in specific circumstances, not routine choices for every patient.
+              </p>
+            </div>
+
+            <div className="treat-cards-duo">
+              {/* Card 1: Urethral Stents */}
+              <article className="treat-approach-card treat-approach-card--compact">
+                <div className="treat-approach-visual">
+                  <svg viewBox="0 0 320 140" className="treat-svg-diagram" aria-label="Illustration of luminal urethral stent">
+                    <rect width="320" height="140" fill="#f8fafc" rx="12"/>
+                    <path d="M30 50 L290 50 L290 90 L30 90 Z" fill="#e2e8f0" stroke="#cbd5e1" strokeWidth="1.5" />
+                    <rect x="100" y="46" width="120" height="48" rx="4" fill="none" stroke="#64748b" strokeWidth="2" strokeDasharray="5 3" />
+                    <line x1="100" y1="46" x2="220" y2="94" stroke="#94a3b8" strokeWidth="1.5" />
+                    <line x1="100" y1="94" x2="220" y2="46" stroke="#94a3b8" strokeWidth="1.5" />
+                    <text x="160" y="28" textAnchor="middle" fill="#334155" fontSize="11" fontWeight="700">Luminal Metallic / Polymeric Stent</text>
+                    <text x="160" y="124" textAnchor="middle" fill="#64748b" fontSize="10">Rarely Utilized due to Long-Term Complications</text>
+                  </svg>
+                  <span className="treat-approach-badge">Selected Use</span>
+                </div>
+                <div className="treat-approach-body">
+                  <h4 className="treat-approach-name">Urethral Stents</h4>
+                  <p className="treat-approach-short">
+                    Urethral stents are devices intended to maintain an opening in the urethra. The manual notes that permanent or temporary stents are rarely used because of potential complications.
+                  </p>
+                  <div className="treat-approach-keyinfo">
+                    <div className="treat-keyinfo-title">Key Points:</div>
+                    <ul className="treat-keyinfo-list">
+                      <li>May be considered only in selected circumstances.</li>
+                      <li>Potential complications mentioned in the manual include migration, infection, and encrustation.</li>
+                      <li>Suitability must be assessed by a qualified urologist.</li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
+
+              {/* Card 2: Perineal Urethrostomy */}
+              <article className="treat-approach-card treat-approach-card--compact">
+                <div className="treat-approach-visual">
+                  <svg viewBox="0 0 320 140" className="treat-svg-diagram" aria-label="Illustration of perineal urethrostomy urinary diversion">
+                    <rect width="320" height="140" fill="#f8fafc" rx="12"/>
+                    <path d="M40 45 Q120 45 160 85 L160 115" stroke="#0284c7" strokeWidth="6" fill="none" strokeLinecap="round" />
+                    <circle cx="160" cy="115" r="7" fill="#0284c7" />
+                    <line x1="140" y1="115" x2="180" y2="115" stroke="#0f172a" strokeWidth="2.5" />
+                    <text x="160" y="28" textAnchor="middle" fill="#0f172a" fontSize="11" fontWeight="700">Perineal Urinary Diversion</text>
+                    <text x="160" y="128" textAnchor="middle" fill="#64748b" fontSize="10">Palliative / Salvage External Meatus Opening</text>
+                  </svg>
+                  <span className="treat-approach-badge">Salvage / Palliative</span>
+                </div>
+                <div className="treat-approach-body">
+                  <h4 className="treat-approach-name">Perineal Urethrostomy</h4>
+                  <p className="treat-approach-short">
+                    Perineal urethrostomy is a surgical procedure that creates an opening in the urethra in the perineal region to allow urine to pass.
+                  </p>
+                  <div className="treat-approach-keyinfo">
+                    <div className="treat-keyinfo-title">Key Points:</div>
+                    <ul className="treat-keyinfo-list">
+                      <li>May be reserved for selected patients who are poor candidates for reconstructive surgery or when salvage treatment is required.</li>
+                      <li>The procedure redirects urinary flow through the perineal opening.</li>
+                      <li>The manual describes it as a palliative option in selected elderly or high-risk patients.</li>
+                      <li>It should not be presented as a universally appropriate or curative option for all urethral strictures.</li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          {/* 7. TREATMENT OPTIONS COMPARISON TABLE */}
+          <div className="treat-subblock">
+            <div className="treat-subblock-hd">
+              <span className="treat-subkicker">SYNTHESIS &amp; COMPARISON</span>
+              <h3 className="treat-subblock-title">Comparing Treatment Approaches</h3>
+              <p className="treat-subblock-desc">
+                Each treatment approach has different considerations, potential limitations, and suitability criteria. The following comparison is intended as a general educational overview, not a substitute for individualized medical advice.
+              </p>
+            </div>
+
+            <div className="treat-table-wrapper" tabIndex={0} role="region" aria-label="Treatment Approaches Comparison Table">
+              <table className="treat-table">
+                <thead>
+                  <tr>
+                    <th scope="col" style={{ width: '18%' }}>Treatment Option</th>
+                    <th scope="col" style={{ width: '14%' }}>Level of Invasiveness</th>
+                    <th scope="col" style={{ width: '23%' }}>Recurrence Considerations</th>
+                    <th scope="col" style={{ width: '22%' }}>Potential Use</th>
+                    <th scope="col" style={{ width: '23%' }}>Limitations</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="treat-td-opt">
+                      <strong>Urethral dilatation</strong>
+                    </td>
+                    <td>
+                      <span className="treat-invasiveness-badge treat-invasiveness--low">Low</span>
+                    </td>
+                    <td>The manual reports a high recurrence rate, up to 60–80%</td>
+                    <td>Initial or mild cases, where clinically appropriate</td>
+                    <td>May provide temporary relief; repeat sessions may be needed</td>
+                  </tr>
+                  <tr>
+                    <td className="treat-td-opt">
+                      <strong>Visual internal urethrotomy (VIU)</strong>
+                    </td>
+                    <td>
+                      <span className="treat-invasiveness-badge treat-invasiveness--low">Low</span>
+                    </td>
+                    <td>Recurrence may be moderate to high</td>
+                    <td>Selected short bulbar strictures</td>
+                    <td>Higher failure risk in recurrent cases; limited effectiveness for long or dense strictures</td>
+                  </tr>
+                  <tr className="treat-row-aalbec">
+                    <td className="treat-td-opt">
+                      <strong>AALBEC</strong>
+                      <span className="treat-row-tag">Regenerative</span>
+                    </td>
+                    <td>
+                      <span className="treat-invasiveness-badge treat-invasiveness--verify">To be verified</span>
+                    </td>
+                    <td>The source table states “Low (early data)”<span className="treat-footnote-sup">†</span></td>
+                    <td>The source table lists short strictures and post-VIU cases</td>
+                    <td>The source table lists long strictures as unsuitable; verify approved indications and supporting evidence</td>
+                  </tr>
+                  <tr>
+                    <td className="treat-td-opt">
+                      <strong>Urethroplasty</strong>
+                    </td>
+                    <td>
+                      <span className="treat-invasiveness-badge treat-invasiveness--high">High</span>
+                    </td>
+                    <td>The manual describes recurrence as lower than with some other approaches</td>
+                    <td>Long or recurrent strictures, depending on the technique</td>
+                    <td>Surgical morbidity and procedure-specific risks</td>
+                  </tr>
+                  <tr>
+                    <td className="treat-td-opt">
+                      <strong>Urethral stent</strong>
+                    </td>
+                    <td>
+                      <span className="treat-invasiveness-badge treat-invasiveness--med">Medium</span>
+                    </td>
+                    <td>Variable</td>
+                    <td>Selected patients, potentially including those unfit for surgery</td>
+                    <td>Migration, infection, and encrustation</td>
+                  </tr>
+                  <tr>
+                    <td className="treat-td-opt">
+                      <strong>Perineal urethrostomy</strong>
+                    </td>
+                    <td>
+                      <span className="treat-invasiveness-badge treat-invasiveness--high">High</span>
+                    </td>
+                    <td>The source table states “Low”</td>
+                    <td>Salvage situations</td>
+                    <td>Creates an alternative urinary opening and may be a non-reconstructive or palliative approach</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="treat-table-notes">
+              <p className="treat-table-note">
+                <span className="treat-footnote-sup">†</span> Note: “Low (early data)” is preserved from source material and is not an established guarantee of outcome. The source comparison table has formatting/alignment considerations in original texts; verify mapping against original clinical literature before final publication.
+              </p>
+              <p className="treat-table-disclaimer">
+                Treatment suitability and outcomes vary according to individual clinical factors. Discuss the available options with a qualified urologist.
+              </p>
+            </div>
+          </div>
+
+          {/* 8. AALBEC CONTEXTUAL CALLOUT */}
+          <div className="treat-aalbec-callout">
+            <div className="treat-aalbec-callout__content">
+              <span className="treat-subkicker">EXPLORING TREATMENT OPTIONS</span>
+              <h3 className="treat-aalbec-callout__title">
+                Understand Where AALBEC Fits Into the Treatment Journey
+              </h3>
+              <p className="treat-aalbec-callout__desc">
+                Treatment decisions for urethral stricture depend on the characteristics of the narrowing, previous treatments, and individual clinical assessment. Explore the AALBEC treatment approach to understand its proposed role, eligibility considerations, procedure details, and available clinical evidence.
+              </p>
+              <div className="treat-aalbec-callout__actions">
+                <a href="#aalbec-therapy" className="btn btn--primary treat-cta-btn">
+                  Explore AALBEC Therapy
+                </a>
+                <a href="#diagnosis" className="btn btn--secondary treat-cta-btn">
+                  Review the Diagnosis Process
+                </a>
               </div>
             </div>
-            <div className="diag-uroflow__right diag-metrics-panel">
-              <div className="diag-metrics-panel__head">
-                <h4>Key Measured Parameters</h4>
-                <div className="diag-metrics-panel__stroke" />
-              </div>
-              <div className="diag-metrics-list">
-                <div className="diag-metric-row">
-                  <div className="diag-metric-row__dot" />
-                  <div className="diag-metric-row__body">
-                    <div className="diag-metric-row__label"><strong>Voided Volume</strong><span>(mL)</span></div>
-                    <div className="diag-metric-row__desc">Total bladder urine output</div>
-                  </div>
-                </div>
-                <div className="diag-metric-row">
-                  <div className="diag-metric-row__dot diag-metric-row__dot--accent" />
-                  <div className="diag-metric-row__body">
-                    <div className="diag-metric-row__label"><strong>Maximum Flow Rate</strong><span>(Qmax)</span></div>
-                    <div className="diag-metric-row__desc">Peak velocity of urine flow</div>
-                  </div>
-                </div>
-                <div className="diag-metric-row">
-                  <div className="diag-metric-row__dot" />
-                  <div className="diag-metric-row__body">
-                    <div className="diag-metric-row__label"><strong>Average Flow Rate</strong><span>(Qavg)</span></div>
-                    <div className="diag-metric-row__desc">Mean evacuation rate</div>
-                  </div>
-                </div>
-                <div className="diag-metric-row">
-                  <div className="diag-metric-row__dot diag-metric-row__dot--mint" />
-                  <div className="diag-metric-row__body">
-                    <div className="diag-metric-row__label"><strong>Flow Time</strong><span>(seconds)</span></div>
-                    <div className="diag-metric-row__desc">Time taken to finish voiding</div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
 
-          <div className="diag-other-hd">
-            <h3>Other Diagnostic Techniques</h3>
-            <p>Advanced imaging studies for precise localization and characterization of stricture:</p>
-          </div>
-
-          <div className="diag-other-grid">
-            <article className="diag-other-card">
-              <div className="diag-other-card__num">01</div>
-              <div className="diag-other-card__head">
-                <span className="diag-chip diag-chip--slate">Radiographic Contrast</span>
-              </div>
-              <h4 className="diag-other-card__name">Retrograde Urethrography (RGU)</h4>
-              <p className="diag-other-card__desc">
-                An X-ray procedure where radiopaque contrast dye is gently injected into the urethra to clearly visualize and detect anterior urethral abnormalities like strictures or injuries.
-              </p>
-              <div className="diag-other-card__accent" />
-            </article>
-
-            <article className="diag-other-card">
-              <div className="diag-other-card__num">02</div>
-              <div className="diag-other-card__head">
-                <span className="diag-chip diag-chip--teal">Acoustic Imaging</span>
-              </div>
-              <h4 className="diag-other-card__name">Ultrasound Urethrography</h4>
-              <p className="diag-other-card__desc">
-                A non-invasive imaging technique using high-frequency sound waves to assess urethral strictures, lumen narrowing, and surrounding soft tissue, especially spongiofibrosis scarring.
-              </p>
-              <div className="diag-other-card__accent diag-other-card__accent--teal" />
-            </article>
-
-            <article className="diag-other-card">
-              <div className="diag-other-card__num">03</div>
-              <div className="diag-other-card__head">
-                <span className="diag-chip diag-chip--purple">Dynamic Fluoroscopy</span>
-              </div>
-              <h4 className="diag-other-card__name">Voiding Cystourethrogram (VCUG)</h4>
-              <p className="diag-other-card__desc">
-                A fluoroscopic test that captures real-time X-ray images of the bladder and urethra during active urination to detect reflux, obstruction, or posterior structural anomalies.
-              </p>
-              <div className="diag-other-card__accent diag-other-card__accent--purple" />
-            </article>
-          </div>
-
-          <div className="diag-premium__cta">
-            <div className="diag-cta-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z" />
+          {/* 9. CLOSING PATIENT-EDUCATION MESSAGE */}
+          <div className="treat-closing-card">
+            <div className="treat-closing-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <path d="M12 8v4" />
+                <path d="M12 16h.01" />
               </svg>
             </div>
-            <div className="diag-cta-text">
-              <strong>Personalized Evaluation:</strong>
-              <span>Your urologist will recommend the best diagnostic combination based on your individual symptoms, severity, and clinical history.</span>
+            <div className="treat-closing-text">
+              <h3 className="treat-closing-title">The right treatment begins with the right assessment.</h3>
+              <p className="treat-closing-desc">
+                The choice of treatment depends on the type of urethral stricture, its length and location, previous treatments, and individual patient factors. A qualified urologist can help assess the available options and determine an appropriate treatment plan.
+              </p>
+            </div>
+            <div className="treat-closing-action">
+              <a href="#aalbec-therapy" className="btn btn--primary treat-cta-btn">
+                Explore Treatment and Recovery
+              </a>
             </div>
           </div>
+
         </div>
       </section>
 
-      {/* ========== 8. CURRENT STANDARD OF CARE & SURGICAL LIMITATIONS (PREMIUM REDESIGN) ========== */}
-      <section id="care-standards" className="block care-premium">
-        <div className="container">
-          <div className="care-premium__header">
-            <span className="block__kicker">Treatment Modalities · Comparative Overview</span>
-            <h2 className="care-premium__title">
-              Current Standard of Care for <span>Urethral Strictures</span>
-            </h2>
-            <p className="care-premium__lede">
-              Surgical treatment is usually advised to improve the flow rate of urine, to ease symptoms, and to prevent possible complications. Current surgical treatment modalities and their clinical limitations are outlined below:
-            </p>
-          </div>
-
-          <div className="care-premium__grid">
-            <article className="care-mod-card care-mod-card--1">
-              <div className="care-mod-card__top">
-                <div className="care-mod-card__num">01</div>
-                <div className="care-mod-card__tags">
-                  <span className="care-tag care-tag--warn">Mechanical Widening</span>
-                </div>
-              </div>
-              <div className="care-mod-card__head">
-                <h3 className="care-mod-card__name">Dilation</h3>
-                <div className="care-mod-card__sub">Widening of the Urethra</div>
-              </div>
-              <div className="care-mod-card__how">
-                <div className="care-how-label">
-                  <span className="care-how-label__dot" />
-                  How it works
-                </div>
-                <p>
-                  Thin rods/dilators of gradually increasing diameters are gently inserted into the urethra in order to mechanically open and stretch the narrowed urethral passage.
-                </p>
-              </div>
-              <div className="care-mod-card__limits">
-                <div className="care-limits-head">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-                    <line x1="12" y1="9" x2="12" y2="13" />
-                    <line x1="12" y1="17" x2="12.01" y2="17" />
-                  </svg>
-                  <span>Limitations &amp; Drawbacks</span>
-                </div>
-                <ul>
-                  <li><strong>QOL Severely Impacted:</strong> Requires frequent repeat instrumentation procedures, resulting in chronic discomfort.</li>
-                  <li><strong>Very High Recurrence (~50%):</strong> Mechanical stretching does not remove scar tissue; narrowing commonly re-occurs.</li>
-                  <li><strong>High UTI Risk:</strong> Repetitive urethral instrument passage markedly increases risks of traumatic infections.</li>
-                </ul>
-              </div>
-            </article>
-
-            <article className="care-mod-card care-mod-card--2">
-              <div className="care-mod-card__top">
-                <div className="care-mod-card__num">02</div>
-                <div className="care-mod-card__tags">
-                  <span className="care-tag care-tag--danger">Endoscopic Incision</span>
-                </div>
-              </div>
-              <div className="care-mod-card__head">
-                <h3 className="care-mod-card__name">Urethrotomy</h3>
-                <div className="care-mod-card__sub">Direct Vision Internal Urethrotomy (DVIU)</div>
-              </div>
-              <div className="care-mod-card__how">
-                <div className="care-how-label">
-                  <span className="care-how-label__dot" />
-                  How it works
-                </div>
-                <p>
-                  A rigid telescope (cystoscope) along with a tiny knife or laser is passed into your urethra to examine the narrowing, after which your surgeon makes an incision in the scar tissue to make your urethra wider.
-                </p>
-              </div>
-              <div className="care-mod-card__limits">
-                <div className="care-limits-head">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-                    <line x1="12" y1="9" x2="12" y2="13" />
-                    <line x1="12" y1="17" x2="12.01" y2="17" />
-                  </svg>
-                  <span>Limitations &amp; Drawbacks</span>
-                </div>
-                <ul>
-                  <li><strong>Recurrence &gt; 70%–80%:</strong> Very high failure rates over mid- to long-term patient follow-up.</li>
-                  <li><strong>Increased Healthcare Costs:</strong> Repeat surgical procedures compound the cumulative financial burden on patients.</li>
-                  <li><strong>Decrease in QOL:</strong> Each internal incision triggers further healing scar tissue, progressively worsening stricture length.</li>
-                </ul>
-              </div>
-            </article>
-
-            <article className="care-mod-card care-mod-card--3">
-              <div className="care-mod-card__top">
-                <div className="care-mod-card__num">03</div>
-                <div className="care-mod-card__tags">
-                  <span className="care-tag care-tag--dark">Open Reconstruction</span>
-                </div>
-              </div>
-              <div className="care-mod-card__head">
-                <h3 className="care-mod-card__name">Urethroplasty</h3>
-                <div className="care-mod-card__sub">Open Surgical Reconstruction</div>
-              </div>
-              <div className="care-mod-card__how">
-                <div className="care-how-label">
-                  <span className="care-how-label__dot" />
-                  How it works
-                </div>
-                <p>
-                  An open surgical reconstruction or replacement of the urethra narrowed by stricture. The stricture area is cut out and the two ends of the healthy urethra stitched together, frequently augmented with large-sized oral tissue grafts.
-                </p>
-              </div>
-              <div className="care-mod-card__limits">
-                <div className="care-limits-head">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-                    <line x1="12" y1="9" x2="12" y2="13" />
-                    <line x1="12" y1="17" x2="12.01" y2="17" />
-                  </svg>
-                  <span>Limitations &amp; Drawbacks</span>
-                </div>
-                <ul>
-                  <li><strong>Oral Mucosa Complications:</strong> Harvesting large buccal mucosa grafts from the mouth causes oral numbness, chronic pain, and salivary complications.</li>
-                  <li><strong>Highly Invasive:</strong> Major open surgery; excision of scar segments can decrease effective urethral length.</li>
-                  <li><strong>Erectile Dysfunction:</strong> Most patients risk developing erectile dysfunction and decreased sexual intimacy.</li>
-                  <li><strong>High Financial Cost:</strong> Extended hospital stay, operating theatre fees, and prolonged recovery incur high expenses.</li>
-                </ul>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      {/* ========== 9. NOVEL TREATMENT: AALBEC CELL THERAPY (PREMIUM REDESIGN) ========== */}
-      <section id="novel-cell-therapy" className="block xtiktr-premium">
+      {/* ========== SECTION: AALBEC REGENERATIVE CELL THERAPY ========== */}
+      <section id="aalbec-therapy" className="sec-block sec-block--bg-white aalbec-section">
         <div className="container">
 
-          <div className="xtiktr-premium__hero xtiktr-hero-prime">
-            <div className="xtiktr-hero-prime__glow xtiktr-hero-prime__glow--a" />
-            <div className="xtiktr-hero-prime__glow xtiktr-hero-prime__glow--b" />
-
-            <div className="xtiktr-hero-prime__badges">
-              <span className="xtiktr-pill xtiktr-pill--primary">
-                <span className="xtiktr-pill__dot" />
-                India's 1st Regenerative Cell Therapy
-              </span>
-              <span className="xtiktr-pill xtiktr-pill--gov">CDSCO (DCGI) Approved</span>
-              <span className="xtiktr-pill xtiktr-pill--dbt">DBT Supported</span>
-              <span className="xtiktr-pill xtiktr-pill--cipla">In Association with Cipla Ltd</span>
-            </div>
-
-            <h2 className="xtiktr-hero-prime__title">
-              Evolving Treatment Options to Augment the Current Practices in Management of Urethral Stricture
-            </h2>
-            <p className="xtiktr-hero-prime__sub">
-              Autologous Adult Live Cultured Buccal Epithelial Cells — A Breakthrough Biological Restoration for Bulbar Urethral Strictures.
-            </p>
-
-            <div className="xtiktr-hero-prime__lead">
-              <p>
-                <strong>AALBEC</strong> is indicated to treat patients with <strong>Bulbar Urethral Strictures</strong>. It is India's first regenerative cell therapy that repairs the strictured urethra using the patient's own cells (<strong>Autologous</strong>) through a natural, biological, and non-destructive method.
-              </p>
-            </div>
-
-            <div className="xtiktr-hero-prime__approvals">
-              <div className="approval-tile">
-                <div className="approval-tile__icon">🏛️</div>
-                <div className="approval-tile__text">
-                  <div className="approval-tile__label">Approved by</div>
-                  <div className="approval-tile__value">CDSCO (DCGI)</div>
-                  <div className="approval-tile__note">Ministry of Health &amp; Family Welfare, Government of India</div>
-                </div>
-              </div>
-              <div className="approval-tile">
-                <div className="approval-tile__icon approval-tile__icon--mint">🔬</div>
-                <div className="approval-tile__text">
-                  <div className="approval-tile__label">Supported by</div>
-                  <div className="approval-tile__value">DBT</div>
-                  <div className="approval-tile__note">Dept. of Biotechnology, Ministry of Science &amp; Technology</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="xtiktr-info-duo">
-            <div className="xtiktr-info-card-prime xtiktr-info-card-prime--eligibility">
-              <div className="xtiktr-info-card-prime__corner xtiktr-info-card-prime__corner--blue" />
-              <div className="xtiktr-info-card-prime__head">
-                <div className="xtiktr-info-card-prime__icon xtiktr-info-card-prime__icon--blue">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                    <circle cx="8.5" cy="7" r="4" />
-                    <polyline points="17 11 19 13 23 9" />
-                  </svg>
-                </div>
-                <span className="xtiktr-info-card-prime__chip xtiktr-info-card-prime__chip--blue">Patient Criteria</span>
-              </div>
-              <h3 className="xtiktr-info-card-prime__title">Eligibility Checklist</h3>
-              <ul className="xtiktr-checklist">
-                <li><span className="xtiktr-check">✓</span><span>Adult male with <strong>bulbar urethral stricture</strong> (18–56 years).</span></li>
-                <li><span className="xtiktr-check">✓</span><span><strong>Previously failed</strong> dilation and internal urethrotomy procedures.</span></li>
-                <li><span className="xtiktr-check">✓</span><span>Seeking a biological solution avoiding open urethroplasty morbidity.</span></li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="xtiktr-process-prime">
-            <div className="xtiktr-process-prime__head">
-              <span className="block__kicker">Treatment Journey</span>
-              <h3>How AALBEC Works</h3>
-              <p>From a minor outpatient oral tissue biopsy to targeted cellular engraftment at the stricture site — a carefully orchestrated 4-step process:</p>
-            </div>
-
-            <div className="xtiktr-process-timeline">
-              <div className="xtiktr-process-node xtiktr-process-node--1">
-                <div className="xtiktr-process-node__ring" />
-                <div className="xtiktr-process-node__body">
-                  <div className="xtiktr-process-node__step">
-                    <span className="xtiktr-process-node__idx">Step</span>
-                    <span className="xtiktr-process-node__num">01</span>
-                  </div>
-                  <div className="xtiktr-process-node__icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="10" />
-                      <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-                      <line x1="9" y1="9" x2="9.01" y2="9" />
-                      <line x1="15" y1="9" x2="15.01" y2="9" />
-                    </svg>
-                  </div>
-                  <h4>Tissue Harvest</h4>
-                  <p>Tissue harvest of buccal mucosa (oral tissue from inner cheek) from the patient under simple local anesthesia.</p>
-                </div>
-              </div>
-
-              <div className="xtiktr-process-connector" />
-
-              <div className="xtiktr-process-node xtiktr-process-node--2">
-                <div className="xtiktr-process-node__ring" />
-                <div className="xtiktr-process-node__body">
-                  <div className="xtiktr-process-node__step">
-                    <span className="xtiktr-process-node__idx">Step</span>
-                    <span className="xtiktr-process-node__num">02</span>
-                  </div>
-                  <div className="xtiktr-process-node__icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="3" />
-                      <circle cx="19" cy="5" r="2" />
-                      <circle cx="5" cy="19" r="2" />
-                      <path d="m10.4 10.4-3.8 3.8" />
-                      <path d="m17.4 6.6-3.8 3.8" />
-                    </svg>
-                  </div>
-                  <h4>Cell Isolation</h4>
-                  <p>Isolation of healthy buccal epithelial cells from harvested oral mucosa under strict aseptic protocols.</p>
-                </div>
-              </div>
-
-              <div className="xtiktr-process-connector" />
-
-              <div className="xtiktr-process-node xtiktr-process-node--3">
-                <div className="xtiktr-process-node__ring" />
-                <div className="xtiktr-process-node__body">
-                  <div className="xtiktr-process-node__step">
-                    <span className="xtiktr-process-node__idx">Step</span>
-                    <span className="xtiktr-process-node__num">03</span>
-                  </div>
-                  <div className="xtiktr-process-node__icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M14 2v6h6" />
-                      <path d="M4 12V4a2 2 0 0 1 2-2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4" />
-                      <path d="M2 15h10" />
-                      <path d="m9 18 3-3-3-3" />
-                    </svg>
-                  </div>
-                  <h4>GMP Cleanroom Culturing</h4>
-                  <p>Culturing and expansion of buccal epithelial cells in a certified cGMP laboratory to generate viable regenerative cellular units.</p>
-                </div>
-              </div>
-
-              <div className="xtiktr-process-connector" />
-
-              <div className="xtiktr-process-node xtiktr-process-node--4">
-                <div className="xtiktr-process-node__ring" />
-                <div className="xtiktr-process-node__body">
-                  <div className="xtiktr-process-node__step">
-                    <span className="xtiktr-process-node__idx">Step</span>
-                    <span className="xtiktr-process-node__num">04</span>
-                  </div>
-                  <div className="xtiktr-process-node__icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="m12 14 4-4" />
-                      <path d="m3.34 7 8.66 5 8.66-5" />
-                      <path d="M4 12v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6" />
-                    </svg>
-                  </div>
-                  <h4>Targeted Implantation</h4>
-                  <p>Implantation of adult live cultured buccal epithelial cells (AALBEC) at the stricture site in the same patient to trigger natural tissue regeneration.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="xtiktr-outcomes-prime">
-            <div className="xtiktr-outcomes-prime__head">
-              <span className="block__kicker">Proven Therapeutic Advantages</span>
-              <h3>Positive Outcomes of AALBEC</h3>
-              <p>Restoring the natural urinary tract anatomy and returning patients to vibrant daily living — five transformative results:</p>
-            </div>
-            <div className="xtiktr-outcomes-prime__grid">
-              <div className="outcome-prime outcome-prime--1">
-                <div className="outcome-prime__icon">🌱</div>
-                <h4>Natural &amp; Biological Regeneration</h4>
-                <p>Natural regeneration of urethral tissue using the patient's own live cells without synthetic meshes or destructive open scarring.</p>
-              </div>
-              <div className="outcome-prime outcome-prime--2">
-                <div className="outcome-prime__icon">💧</div>
-                <h4>Normal Flow of Urine</h4>
-                <p>Significantly increases urinary flow rates and relieves obstructive symptoms, allowing smooth and effortless bladder emptying.</p>
-              </div>
-              <div className="outcome-prime outcome-prime--3">
-                <div className="outcome-prime__icon">🏃</div>
-                <h4>Prompt Return to Daily Routine</h4>
-                <p>Minimally invasive with short hospitalization (typically discharged within 24 hours), enabling early return to work and family.</p>
-              </div>
-              <div className="outcome-prime outcome-prime--4">
-                <div className="outcome-prime__icon">❤️</div>
-                <h4>Restoration of Sexual Function</h4>
-                <p>Protects the neurovascular bundle of the penis, preserving erectile capability and restoring intimate confidence.</p>
-              </div>
-              <div className="outcome-prime outcome-prime--5">
-                <div className="outcome-prime__icon">🌟</div>
-                <h4>Improvement in Quality of Life</h4>
-                <p>Frees patients from chronic pain, recurring dilations, social anxiety, and sleep disturbances caused by stricture disease.</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="xtiktr-precautions-prime">
-            <div className="xtiktr-precautions-prime__head">
-              <span className="block__kicker">Patient Care Guidelines</span>
-              <h3>Precautions for Maximum Safety &amp; Efficacy</h3>
-              <p>Clear clinical directives following tissue harvesting and cellular implantation:</p>
-            </div>
-            <div className="xtiktr-precautions-prime__duo">
-              <div className="phase-card phase-card--phase1">
-                <div className="phase-card__top">
-                  <span className="phase-card__tag">Phase 01</span>
-                  <div className="phase-card__corner" />
-                </div>
-                <h4>Precautions Post Tissue Harvest</h4>
-                <div className="phase-card__sub">Essential care for the oral cheek biopsy site</div>
-                <ul className="phase-card__list">
-                  <li><span className="phase-bullet phase-bullet--mint" /> <span><strong>Dietary Caution:</strong> Avoid spicy and hot food requiring chewing until advised.</span></li>
-                  <li><span className="phase-bullet phase-bullet--mint" /> <span><strong>Oral Gargling:</strong> Do regular gargling with prescribed medication per urologist advice.</span></li>
-                  <li><span className="phase-bullet phase-bullet--mint" /> <span><strong>Avoid Toxins:</strong> Avoid smoking and alcohol during the healing window.</span></li>
-                  <li><span className="phase-bullet phase-bullet--mint" /> <span><strong>Tooth Care:</strong> Avoid forceful brushing on teeth for 1 week.</span></li>
-                  <li><span className="phase-bullet phase-bullet--mint" /> <span><strong>Contact Clinic:</strong> If swelling, pain, or bleeding appears, contact urologist promptly.</span></li>
-                </ul>
-              </div>
-
-              <div className="phase-card phase-card--phase2">
-                <div className="phase-card__top">
-                  <span className="phase-card__tag phase-card__tag--blue">Phase 02</span>
-                  <div className="phase-card__corner phase-card__corner--blue" />
-                </div>
-                <h4>Precautions Post-Implantation</h4>
-                <div className="phase-card__sub phase-card__sub--blue">Care instructions following cell therapy implantation</div>
-                <ul className="phase-card__list">
-                  <li><span className="phase-bullet phase-bullet--blue" /> <span><strong>Catheter Removal:</strong> Within 2 weeks per urologist discretion.</span></li>
-                  <li><span className="phase-bullet phase-bullet--blue" /> <span><strong>Hospital Stay:</strong> Typically discharged after 24 hours (as per urologist).</span></li>
-                  <li><span className="phase-bullet phase-bullet--blue" /> <span><strong>Medications &amp; Showering:</strong> Follow urologist guidelines; avoid baths/hot tubs until cleared.</span></li>
-                  <li><span className="phase-bullet phase-bullet--blue" /> <span><strong>Activity &amp; Sex:</strong> Avoid heavy lifting. Avoid intercourse for 4–6 weeks.</span></li>
-                  <li><span className="phase-bullet phase-bullet--blue" /> <span><strong>Driving:</strong> Avoid driving until cleared; do not drive if drowsy on medication.</span></li>
-                  <li><span className="phase-bullet phase-bullet--blue" /> <span><strong>Bowel &amp; Hydration:</strong> Use stool softeners if needed; drink plenty of water.</span></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className="xtiktr-trial-prime">
-            <div className="xtiktr-trial-prime__head">
-              <span className="block__kicker">Clinical Trial in India</span>
-              <h3>Success of AALBEC — Clinical Trial Results</h3>
-              <p className="trial-prime__lead">
-                <strong>"AALBEC Clinical Trial in India: Cure of urethral stricture with AALBEC — Autologous Adult Live Cultured Buccal Epithelial Cells"</strong>
-              </p>
-              <p className="trial-prime__meta">
-                A prospective, open-label, multicentric clinical trial was conducted across premier hospitals in India to assess the safety and efficacy of Autologous Adult Live Cultured Buccal Epithelial Cells (AALBEC) in male patients with urethral stricture, following formal regulatory approval from the CDSCO (DCGI), Ministry of Health and Family Welfare, Government of India.
-              </p>
-            </div>
-
-            <div className="trial-prime__findings">
-              <div className="finding-prime finding-prime--efficacy">
-                <div className="finding-prime__corner" />
-                <div className="finding-prime__head">
-                  <span className="finding-prime__icon">📈</span>
-                  <h4>Efficacy Analysis</h4>
-                </div>
-                <p>
-                  <strong>Significant Clinical Improvement:</strong> Uroflowmetry flow rates (Qmax peak flow) and AUA Symptom Scores significantly improved from baseline for all evaluated patients.
+          {/* 1. INTRODUCING AALBEC THERAPY */}
+          <div className="aalbec-hero-block">
+            <div className="aalbec-hero-grid">
+              <div className="aalbec-hero-content">
+                <span className="block__kicker">REGENERATIVE CELL THERAPY</span>
+                <h2 className="aalbec-hero-title">
+                  Introducing <span>AALBEC Therapy</span>
+                </h2>
+                <p className="aalbec-hero-lede">
+                  AALBEC stands for <strong>Autologous Adult Live Buccal Epithelial Cell</strong> therapy. It uses cultured epithelial cells obtained from the patient's own inner cheek and delivered endoscopically to selected bulbar urethral strictures, with the aim of supporting restoration of the urethral epithelial lining.
                 </p>
-              </div>
-              <div className="finding-prime finding-prime--safety">
-                <div className="finding-prime__corner finding-prime__corner--mint" />
-                <div className="finding-prime__head">
-                  <span className="finding-prime__icon">🛡️</span>
-                  <h4>Safety Analysis</h4>
-                </div>
-                <p>
-                  <strong>Zero Product-Related Adverse Events:</strong> There was <strong>no Adverse Event (AE)</strong> reported related to the product in the entire clinical trial. There was <strong>no Serious Adverse Event (SAE)</strong> reported during the entire clinical study.
-                </p>
-              </div>
-              <div className="finding-prime finding-prime--conclusion">
-                <div className="finding-prime__corner finding-prime__corner--amber" />
-                <div className="finding-prime__head">
-                  <span className="finding-prime__icon">🏆</span>
-                  <h4>Clinical Conclusion</h4>
-                </div>
-                <p>
-                  Autologous Adult Live Cultured Buccal Epithelial Cells (AALBEC) is <strong>safe, effective, and well-tolerated</strong> with significant improvement in all parameters for urethral stricture disease in males. Patients' urinary excretory function and quality of life greatly improved.
-                </p>
-              </div>
-            </div>
-          </div>
 
-          <div className="xtiktr-refs-prime">
-            <button
-              type="button"
-              className={`refs-prime-toggle ${showReferences ? 'is-open' : ''}`}
-              onClick={() => setShowReferences(prev => !prev)}
-              aria-expanded={showReferences}
-            >
-              <div className="refs-prime-toggle__left">
-                <span className="refs-prime-toggle__icon" aria-hidden="true">📚</span>
-                <div className="refs-prime-toggle__text">
-                  <span className="refs-prime-toggle__title">Scientific References &amp; Evidence Base</span>
-                  <span className="refs-prime-toggle__count">8 Peer-Reviewed Citations</span>
+                <div className="aalbec-hero-highlights">
+                  <div className="aalbec-highlight-item">
+                    <div className="aalbec-highlight-icon">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="aalbec-highlight-title">Autologous Tissue Source</h4>
+                      <p className="aalbec-highlight-desc">Derived from the patient's own inner cheek, avoiding immunologic rejection.</p>
+                    </div>
+                  </div>
+
+                  <div className="aalbec-highlight-item">
+                    <div className="aalbec-highlight-icon">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="2" y1="12" x2="22" y2="12" />
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="aalbec-highlight-title">Endoscopic Delivery</h4>
+                      <p className="aalbec-highlight-desc">Delivered via minimally invasive instrumentation directly to the bulbar stricture bed.</p>
+                    </div>
+                  </div>
+
+                  <div className="aalbec-highlight-item">
+                    <div className="aalbec-highlight-icon">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        <path d="m9 12 2 2 4-4" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="aalbec-highlight-title">Mucosal Restoration</h4>
+                      <p className="aalbec-highlight-desc">Formulated to foster mucosal re-epithelialization and physiological caliber.</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="refs-prime-toggle__right">
-                <span className="refs-prime-toggle__action">{showReferences ? 'Hide' : 'View'}</span>
-                <svg
-                  className={`refs-prime-toggle__chev ${showReferences ? 'is-rotated' : ''}`}
-                  width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"
+
+                <a
+                  href="https://www.frontiersin.org/journals/urology/articles/10.3389/fruro.2026.1813098/full"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="aalbec-paper-badge-link"
                 >
-                  <polyline points="6 9 12 15 18 9" />
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                  </svg>
+                  <span>Frontiers in Urology Peer-Reviewed Journal Publication</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                </a>
+              </div>
+
+              {/* Scientific Medical Illustration Showing Buccal Cells & Urethral Mucosal Restoration */}
+              <div className="aalbec-hero-media">
+                <div className="aalbec-media-card">
+                  <div className="aalbec-media-head">
+                    <span className="aalbec-media-tag">Scientific Illustration</span>
+                    <h3 className="aalbec-media-heading">Buccal Cells &amp; Urethral Mucosal Restoration</h3>
+                  </div>
+
+                  <svg viewBox="0 0 440 280" className="aalbec-main-svg" xmlns="http://www.w3.org/2000/svg" aria-label="Scientific medical illustration showing buccal cells and urethral mucosal restoration">
+                    <rect width="440" height="280" rx="16" fill="#f8fafc" />
+
+                    {/* Left: Buccal Epithelial Cells */}
+                    <g transform="translate(20, 20)">
+                      <rect width="185" height="90" rx="10" fill="#ffffff" stroke="#bae6fd" strokeWidth="1.5" />
+                      <circle cx="36" cy="38" r="16" fill="#e0f2fe" stroke="#0284c7" strokeWidth="1.5" />
+                      <circle cx="36" cy="38" r="6" fill="#0284c7" />
+                      <circle cx="62" cy="32" r="12" fill="#e0f2fe" stroke="#0284c7" strokeWidth="1.5" />
+                      <circle cx="62" cy="32" r="4.5" fill="#0284c7" />
+                      <circle cx="54" cy="56" r="11" fill="#e0f2fe" stroke="#0284c7" strokeWidth="1.5" />
+                      <circle cx="54" cy="56" r="4" fill="#0284c7" />
+                      <text x="88" y="36" fontSize="11" fontWeight="700" fill="#0f172a">Buccal Cells</text>
+                      <text x="88" y="52" fontSize="9.5" fill="#475569">Inner Cheek Epithelium</text>
+                      <text x="88" y="68" fontSize="8.5" fontWeight="600" fill="#0284c7">Autologous Live Culture</text>
+                    </g>
+
+                    {/* Middle connector arrow */}
+                    <path d="M 215 65 L 235 65" stroke="#0284c7" strokeWidth="2.5" strokeDasharray="3 3" />
+                    <polygon points="235,61 242,65 235,69" fill="#0284c7" />
+
+                    {/* Right: In-vitro Expansion */}
+                    <g transform="translate(245, 20)">
+                      <rect width="175" height="90" rx="10" fill="#ffffff" stroke="#cbd5e1" strokeWidth="1.5" />
+                      <circle cx="42" cy="45" r="22" fill="#f0fdf4" stroke="#86efac" strokeWidth="1.5" />
+                      <circle cx="36" cy="42" r="3" fill="#16a34a" />
+                      <circle cx="48" cy="42" r="3" fill="#16a34a" />
+                      <circle cx="42" cy="50" r="3" fill="#16a34a" />
+                      <text x="76" y="36" fontSize="11" fontWeight="700" fill="#0f172a">Cell Culture</text>
+                      <text x="76" y="52" fontSize="9.5" fill="#475569">Strict Isolation &amp; QC</text>
+                      <text x="76" y="68" fontSize="8.5" fontWeight="600" fill="#16a34a">Expanded Batch</text>
+                    </g>
+
+                    {/* Bottom: Urethral Mucosal Restoration */}
+                    <g transform="translate(20, 128)">
+                      <rect width="400" height="134" rx="12" fill="#ffffff" stroke="#e2e8f0" strokeWidth="1.5" />
+                      <text x="200" y="24" textAnchor="middle" fontSize="11.5" fontWeight="800" fill="#0f172a">
+                        Endoscopic Application &amp; Urethral Mucosal Restoration
+                      </text>
+
+                      {/* Urethral Tube */}
+                      <path d="M 30 48 Q 200 42 370 48 L 370 88 Q 200 94 30 88 Z" fill="#f1f5f9" stroke="#cbd5e1" strokeWidth="1.2" />
+
+                      {/* De-epithelialized target zone */}
+                      <path d="M 130 48 Q 200 56 270 48 L 270 88 Q 200 80 130 88 Z" fill="#fee2e2" fillOpacity="0.45" stroke="#f87171" strokeWidth="1" strokeDasharray="3 2" />
+
+                      {/* Endoscopic delivery cannula */}
+                      <line x1="30" y1="68" x2="175" y2="68" stroke="#0284c7" strokeWidth="4" strokeLinecap="round" />
+                      <circle cx="175" cy="68" r="4.5" fill="#38bdf8" />
+
+                      {/* Restored mucosal layer */}
+                      <path d="M 140 52 Q 200 50 260 52" stroke="#0284c7" strokeWidth="3.5" strokeLinecap="round" />
+                      <path d="M 140 84 Q 200 86 260 84" stroke="#0284c7" strokeWidth="3.5" strokeLinecap="round" />
+
+                      <text x="200" y="72" textAnchor="middle" fontSize="9.5" fontWeight="700" fill="#0369a1">
+                        Cultured Live Cells Populate Urethral Lumen
+                      </text>
+                      <text x="200" y="116" textAnchor="middle" fontSize="9" fill="#64748b">
+                        Supporting restoration of the urethral epithelial lining and preserving tissue integrity
+                      </text>
+                    </g>
+                  </svg>
+
+                  <p className="aalbec-media-caption">
+                    Schematic representation of cell harvesting from inner cheek buccal tissue, laboratory expansion, and endoscopic delivery for mucosal regeneration.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 2. HOW AALBEC WORKS (4-Step Visual Timeline) */}
+          <div className="aalbec-subblock" id="how-aalbec-works">
+            <div className="aalbec-subblock-hd">
+              <span className="treat-subkicker">TREATMENT TIMELINE</span>
+              <h3 className="aalbec-subblock-title">How AALBEC Works</h3>
+              <p className="aalbec-subblock-desc">
+                A clean, four-step clinical pathway outlining cell collection, laboratory cultivation, targeted delivery, and mucosal restoration.
+              </p>
+            </div>
+
+            <div className="aalbec-timeline-grid">
+              {/* Step 1 */}
+              <div className="aalbec-timeline-card">
+                <div className="aalbec-timeline-head">
+                  <span className="aalbec-step-pill">Step 01</span>
+                </div>
+                <div className="aalbec-step-ill">
+                  <svg viewBox="0 0 160 100" className="aalbec-step-svg" aria-label="Illustration of buccal biopsy">
+                    <rect width="160" height="100" rx="10" fill="#f0f9ff" />
+                    <path d="M 25 30 Q 65 20 90 50 Q 110 80 145 75" stroke="#bae6fd" strokeWidth="3" fill="none" />
+                    <circle cx="90" cy="50" r="16" fill="#ffffff" stroke="#0284c7" strokeWidth="1.5" />
+                    <circle cx="90" cy="50" r="6" fill="#0284c7" />
+                    <line x1="130" y1="20" x2="102" y2="44" stroke="#0369a1" strokeWidth="2.5" strokeLinecap="round" />
+                  </svg>
+                </div>
+                <h4 className="aalbec-step-name">Buccal Biopsy</h4>
+                <p className="aalbec-step-text">
+                  A small tissue sample is collected from the inner cheek under local anesthesia in an outpatient setting.
+                </p>
+              </div>
+
+              {/* Step 2 */}
+              <div className="aalbec-timeline-card">
+                <div className="aalbec-timeline-head">
+                  <span className="aalbec-step-pill">Step 02</span>
+                </div>
+                <div className="aalbec-step-ill">
+                  <svg viewBox="0 0 160 100" className="aalbec-step-svg" aria-label="Illustration of cell culture and testing">
+                    <rect width="160" height="100" rx="10" fill="#f0fdf4" />
+                    <circle cx="80" cy="50" r="32" fill="#ffffff" stroke="#86efac" strokeWidth="1.5" />
+                    <circle cx="80" cy="50" r="22" fill="#dcfce7" />
+                    <circle cx="73" cy="46" r="3.5" fill="#16a34a" />
+                    <circle cx="87" cy="46" r="3.5" fill="#16a34a" />
+                    <circle cx="80" cy="56" r="4" fill="#16a34a" />
+                  </svg>
+                </div>
+                <h4 className="aalbec-step-name">Cell Culture</h4>
+                <p className="aalbec-step-text">
+                  Epithelial cells are isolated, cultured, and quality-checked in a certified cGMP facility to confirm viability and sterility.
+                </p>
+              </div>
+
+              {/* Step 3 */}
+              <div className="aalbec-timeline-card">
+                <div className="aalbec-timeline-head">
+                  <span className="aalbec-step-pill">Step 03</span>
+                </div>
+                <div className="aalbec-step-ill">
+                  <svg viewBox="0 0 160 100" className="aalbec-step-svg" aria-label="Illustration of endoscopic cell delivery">
+                    <rect width="160" height="100" rx="10" fill="#f8fafc" />
+                    <rect x="25" y="38" width="110" height="24" rx="12" fill="#e2e8f0" stroke="#cbd5e1" />
+                    <line x1="25" y1="50" x2="90" y2="50" stroke="#0284c7" strokeWidth="4" strokeLinecap="round" />
+                    <circle cx="95" cy="50" r="6" fill="#38bdf8" />
+                    <circle cx="106" cy="46" r="2.5" fill="#0284c7" />
+                    <circle cx="112" cy="54" r="2.5" fill="#0284c7" />
+                  </svg>
+                </div>
+                <h4 className="aalbec-step-name">Cell Delivery</h4>
+                <p className="aalbec-step-text">
+                  Cultured cells are delivered to the stricture site using endoscopic techniques, applying live cells to the prepared mucosal bed.
+                </p>
+              </div>
+
+              {/* Step 4 */}
+              <div className="aalbec-timeline-card">
+                <div className="aalbec-timeline-head">
+                  <span className="aalbec-step-pill">Step 04</span>
+                </div>
+                <div className="aalbec-step-ill">
+                  <svg viewBox="0 0 160 100" className="aalbec-step-svg" aria-label="Illustration of regenerative intent">
+                    <rect width="160" height="100" rx="10" fill="#eff6ff" />
+                    <rect x="25" y="32" width="110" height="36" rx="14" fill="#ffffff" stroke="#93c5fd" strokeWidth="1.5" />
+                    <path d="M 35 42 Q 80 40 125 42" stroke="#0284c7" strokeWidth="2.5" strokeLinecap="round" />
+                    <path d="M 35 58 Q 80 60 125 58" stroke="#0284c7" strokeWidth="2.5" strokeLinecap="round" />
+                    <path d="M 60 50 L 100 50" stroke="#0284c7" strokeWidth="2" strokeDasharray="3 2" />
+                    <polygon points="100,47 106,50 100,53" fill="#0284c7" />
+                  </svg>
+                </div>
+                <h4 className="aalbec-step-name">Regenerative Intent</h4>
+                <p className="aalbec-step-text">
+                  The approach aims to support restoration of the urethral lining, helping re-establish epithelial continuity and urinary flow.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* 3. KEY FEATURES (3 Compact Cards) */}
+          <div className="aalbec-subblock">
+            <div className="aalbec-subblock-hd">
+              <span className="treat-subkicker">CORE ATTRIBUTES</span>
+              <h3 className="aalbec-subblock-title">Key Features</h3>
+              <p className="aalbec-subblock-desc">
+                Distinctive clinical properties of the AALBEC autologous epithelial cell therapy platform.
+              </p>
+            </div>
+
+            <div className="aalbec-features-row">
+              <div className="aalbec-feature-box">
+                <div className="aalbec-feature-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                </div>
+                <h4 className="aalbec-feature-name">Autologous Cells</h4>
+                <p className="aalbec-feature-summary">
+                  Cells come from the same patient receiving treatment, removing the risk of donor-tissue immune rejection or graft-versus-host complications.
+                </p>
+              </div>
+
+              <div className="aalbec-feature-box">
+                <div className="aalbec-feature-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <path d="m9 12 2 2 4-4" />
+                  </svg>
+                </div>
+                <h4 className="aalbec-feature-name">Regenerative Approach</h4>
+                <p className="aalbec-feature-summary">
+                  Aims to support restoration of the urethral epithelial lining, promoting natural cellular healing rather than just mechanical incision.
+                </p>
+              </div>
+
+              <div className="aalbec-feature-box">
+                <div className="aalbec-feature-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="2" y1="12" x2="22" y2="12" />
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                  </svg>
+                </div>
+                <h4 className="aalbec-feature-name">Minimally Invasive Delivery</h4>
+                <p className="aalbec-feature-summary">
+                  Uses endoscopic techniques to deliver cultured cells, avoiding the extensive surgical incisions, tissue flaps, or prolonged recovery of open surgery.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* 4. PATIENT ELIGIBILITY */}
+          <div className="aalbec-subblock" id="eligibility">
+            <div className="aalbec-subblock-hd">
+              <span className="treat-subkicker">PATIENT SELECTION</span>
+              <h3 className="aalbec-subblock-title">Is AALBEC Therapy an Option for You?</h3>
+              <p className="aalbec-subblock-desc">
+                The Product Brief defines specific eligibility criteria for male patients being evaluated for AALBEC therapy.
+              </p>
+            </div>
+
+            <div className="aalbec-eligibility-wrap">
+              <div className="aalbec-criteria-grid">
+                <div className="aalbec-crit-card">
+                  <div className="aalbec-crit-top">
+                    <span className="aalbec-crit-badge">01</span>
+                    <h4 className="aalbec-crit-title">Age Profile</h4>
+                  </div>
+                  <p className="aalbec-crit-body">
+                    Male patients aged <strong>18–56 years</strong>.
+                  </p>
+                </div>
+
+                <div className="aalbec-crit-card">
+                  <div className="aalbec-crit-top">
+                    <span className="aalbec-crit-badge">02</span>
+                    <h4 className="aalbec-crit-title">Stricture Characteristics</h4>
+                  </div>
+                  <p className="aalbec-crit-body">
+                    Recurrent bulbar urethral stricture measuring <strong>2 cm or less</strong>.
+                  </p>
+                </div>
+
+                <div className="aalbec-crit-card">
+                  <div className="aalbec-crit-top">
+                    <span className="aalbec-crit-badge">03</span>
+                    <h4 className="aalbec-crit-title">Prior Procedures</h4>
+                  </div>
+                  <p className="aalbec-crit-body">
+                    <strong>Up to two previous DVIU</strong> (Direct Vision Internal Urethrotomy) procedures.
+                  </p>
+                </div>
+
+                <div className="aalbec-crit-card">
+                  <div className="aalbec-crit-top">
+                    <span className="aalbec-crit-badge">04</span>
+                    <h4 className="aalbec-crit-title">Reconstruction Suitability</h4>
+                  </div>
+                  <p className="aalbec-crit-body">
+                    <strong>Not suitable for open urethroplasty</strong> or unwilling to undergo surgical reconstruction.
+                  </p>
+                </div>
+              </div>
+
+              <div className="aalbec-advisory-panel">
+                <div className="aalbec-advisory-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                  </svg>
+                </div>
+                <div className="aalbec-advisory-text">
+                  <strong>Assessment Requirement:</strong> Patient eligibility requires comprehensive assessment by a qualified urologist, including diagnostic imaging (uroflowmetry, retrograde urethrography), exclusion of active urinary tract infections, and confirmation of healthy oral buccal mucosal status.
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========== SECTION 12 — POTENTIAL BENEFITS AND CONSIDERATIONS ========== */}
+      <section id="benefits-considerations" className="sec-block sec-block--bg-soft">
+        <div className="container">
+          <div className="block__hd">
+            <span className="block__kicker">Balanced Evaluation</span>
+            <h2 className="block__title">
+              A Regenerative Approach <span>to Urethral Healing</span>
+            </h2>
+            <p className="block__lede">
+              AALBEC is designed to deliver a patient's own cultured buccal epithelial cells to the stricture site. Its proposed role is to support epithelial restoration in appropriately selected patients.
+            </p>
+          </div>
+
+          <div className="benefits-grid">
+            <article className="benefit-card">
+              <div className="benefit-card__icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
                 </svg>
               </div>
+              <h3 className="benefit-card__title">Patient-specific cells</h3>
+              <p className="benefit-card__desc">
+                The cell product is prepared from the patient's own tissue.
+              </p>
+            </article>
+
+            <article className="benefit-card">
+              <div className="benefit-card__icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 11 12 14 22 4" />
+                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                </svg>
+              </div>
+              <h3 className="benefit-card__title">Controlled processing</h3>
+              <p className="benefit-card__desc">
+                Laboratory processing includes specified quality checks before release.
+              </p>
+            </article>
+
+            <article className="benefit-card">
+              <div className="benefit-card__icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </div>
+              <h3 className="benefit-card__title">Endoscopic delivery</h3>
+              <p className="benefit-card__desc">
+                The cells are delivered to the target area using an endoscopic technique.
+              </p>
+            </article>
+
+            <article className="benefit-card">
+              <div className="benefit-card__icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+              </div>
+              <h3 className="benefit-card__title">Planned follow-up</h3>
+              <p className="benefit-card__desc">
+                Clinical monitoring helps assess recovery and treatment outcomes.
+              </p>
+            </article>
+          </div>
+
+          <div className="benefits-disclosure">
+            <p className="benefits-disclosure__text">
+              The potential benefits and limitations should be explained using approved product information and clinical evidence. Outcomes vary, and recurrence or complications cannot be ruled out.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ========== SECTION 13 — CLINICAL EVIDENCE ========== */}
+      <section id="clinical-evidence" className="sec-block sec-block--bg-white">
+        <div className="container">
+          <div className="block__hd">
+            <span className="block__kicker">CLINICAL EVIDENCE</span>
+            <h2 className="block__title">
+              Clinical Evidence <span>for AALBEC Therapy</span>
+            </h2>
+            <p className="block__lede">
+              Clinical evidence helps clinicians and patients understand how a treatment has been evaluated, including its effectiveness, safety and limitations.
+            </p>
+          </div>
+
+          <div className="evidence-pillars-grid">
+            <article className="evidence-pillar-card">
+              <div className="evidence-pillar-card__icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                </svg>
+              </div>
+              <h3 className="evidence-pillar-card__title">Effectiveness</h3>
+              <p className="evidence-pillar-card__desc">
+                Present the measured outcomes and study findings using verified clinical data.
+              </p>
+            </article>
+
+            <article className="evidence-pillar-card">
+              <div className="evidence-pillar-card__icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </div>
+              <h3 className="evidence-pillar-card__title">Safety</h3>
+              <p className="evidence-pillar-card__desc">
+                Describe reported adverse events and relevant safety information.
+              </p>
+            </article>
+
+            <article className="evidence-pillar-card">
+              <div className="evidence-pillar-card__icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+              </div>
+              <h3 className="evidence-pillar-card__title">Study population</h3>
+              <p className="evidence-pillar-card__desc">
+                Explain which patients were studied and how closely they match the approved indication.
+              </p>
+            </article>
+
+            <article className="evidence-pillar-card">
+              <div className="evidence-pillar-card__icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                </svg>
+              </div>
+              <h3 className="evidence-pillar-card__title">Scientific references</h3>
+              <p className="evidence-pillar-card__desc">
+                Provide the original publications and relevant supporting documents.
+              </p>
+            </article>
+          </div>
+
+          <div className="evidence-disclaimer-box">
+            <p className="evidence-disclaimer-box__text">
+              Clinical results should be reviewed and approved by the medical and regulatory teams before publication. Study outcomes must not be presented as guarantees of individual results.
+            </p>
+          </div>
+
+          <div style={{ textAlign: 'center' }}>
+            <button
+              type="button"
+              className="evidence-refs-toggle-btn"
+              onClick={() => setShowReferences((prev) => !prev)}
+              aria-expanded={showReferences}
+            >
+              <span>{showReferences ? 'Hide' : 'View'} Scientific References &amp; Publications</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: showReferences ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
             </button>
 
             {showReferences && (
-              <div className="refs-prime-drawer">
-                <ol className="refs-prime-list">
-                  <li><span className="refs-prime-num">[1]</span><div>Mangaiyarkarasi S, Thiruvasagamani B, Mohamed Ali J. <em>Clinical Presentation and Management of Urethral Strictures: A Study.</em></div></li>
-                  <li><span className="refs-prime-num">[2]</span><div>Mayo Clinic Patient Care &amp; Health Information: <em>Urethral Stricture Disease Overview &amp; Clinical Management.</em></div></li>
-                  <li><span className="refs-prime-num">[3]</span><div>Golomb D, Atias M, Goldberg H, Rappaport YH, Raz O. Incidence and Characteristics of Urethral Stricture Following Transurethral Resection of the Prostate and Open Simple Prostatectomy: A 21-Year Retrospective Cohort Study. <em>Journal of Clinical Medicine</em>. 2025. doi:10.3390/jcm14113777.</div></li>
-                  <li><span className="refs-prime-num">[4]</span><div>Verla W, Oosterlinck W, Spinoit AF, Waterloos M. A Comprehensive Review Emphasizing Anatomy, Etiology, Diagnosis, and Treatment of Male Urethral Stricture Disease. <em>Biomed Res Int</em>. 2019 Apr. doi:10.1155/2019/9046430. PMID: 31139658; PMCID: PMC6500724.</div></li>
-                  <li><span className="refs-prime-num">[5]</span><div><em>uregrOw Patient Book</em> by Regrow Biosciences Pvt. Ltd. &copy; Copyright 2025.</div></li>
-                  <li><span className="refs-prime-num">[6]</span><div>Central Drugs Standard Control Organization (CDSCO), Directorate General of Health Services, Ministry of Health and Family Welfare, Government of India. Online Drug Registry: <a href="https://cdscoonline.gov.in" target="_blank" rel="noopener noreferrer">cdscoonline.gov.in</a>.</div></li>
-                  <li><span className="refs-prime-num">[7]</span><div>Kulkarni SB, Pathak H, Khanna S, Choubey S. A prospective, multi-center, open-label single-arm phase 2b study of autologous adult live cultured buccal epithelial cells (AALBEC) in the treatment of bulbar urethral stricture. <em>World Journal of Urology</em>. 2021; Epub 2020 Sep 14. PMID: 32929625.</div></li>
-                  <li><span className="refs-prime-num">[8]</span><div>Clinical Data on File, Regrow Biosciences Pvt. Ltd. / Cipla Ltd, Mumbai, India.</div></li>
+              <div className="evidence-refs-panel">
+                <ol className="evidence-refs-list">
+                  <li>
+                    Frontiers in Urology (2026). <em>A patient-specific approach to urethral healing with Autologous Adult Live Buccal Epithelial Cells (AALBEC).</em> <a href="https://www.frontiersin.org/journals/urology/articles/10.3389/fruro.2026.1813098/full" target="_blank" rel="noopener noreferrer">doi:10.3389/fruro.2026.1813098</a>.
+                  </li>
+                  <li>
+                    Kulkarni SB, Pathak H, Khanna S, Choubey S. A prospective, multi-center, open-label single-arm phase 2b study of autologous adult live cultured buccal epithelial cells (AALBEC) in the treatment of bulbar urethral stricture. <em>World Journal of Urology</em>. 2021. PMID: 32929625.
+                  </li>
+                  <li>
+                    Central Drugs Standard Control Organization (CDSCO), Directorate General of Health Services, Ministry of Health and Family Welfare, Government of India. Online Drug Registry: <a href="https://cdscoonline.gov.in" target="_blank" rel="noopener noreferrer">cdscoonline.gov.in</a>.
+                  </li>
+                  <li>
+                    AALBEC Manual, Chapter 4 (Clinical Evaluation &amp; Diagnostic Investigations), Chapters 5–7 (Treatment Options &amp; Cell Therapy Overview), and Chapters 9–12 (Eligibility, Process, Recovery &amp; Clinical Evidence).
+                  </li>
                 </ol>
               </div>
             )}
           </div>
 
+          <div className="sec-block__source">
+            Source basis: AALBEC Manual, Chapter 11.
+          </div>
         </div>
       </section>
+
+      {/* ========== SECTION 14 — RECOVERY AND FOLLOW-UP ========== */}
+      <section id="recovery-followup" className="sec-block sec-block--bg-soft">
+        <div className="container">
+          <div className="block__hd">
+            <span className="block__kicker">Post-Procedure Care</span>
+            <h2 className="block__title">
+              Recovery, Care <span>and Follow-Up</span>
+            </h2>
+            <p className="block__lede">
+              After treatment, patients need clear instructions from their clinical team and should attend scheduled follow-up visits.
+            </p>
+          </div>
+
+          <div className="recovery-grid">
+            <article className="recovery-card">
+              <div className="recovery-card__icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </div>
+              <h3 className="recovery-card__title">Catheter care</h3>
+              <p className="recovery-card__desc">
+                Follow the clinical team's instructions for catheter management and removal.
+              </p>
+            </article>
+
+            <article className="recovery-card">
+              <div className="recovery-card__icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M10.5 20.5l10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z" />
+                  <path d="M8.5 8.5l7 7" />
+                </svg>
+              </div>
+              <h3 className="recovery-card__title">Medication and infection precautions</h3>
+              <p className="recovery-card__desc">
+                Take prescribed medication as directed and follow hygiene instructions.
+              </p>
+            </article>
+
+            <article className="recovery-card">
+              <div className="recovery-card__icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+              </div>
+              <h3 className="recovery-card__title">Activity and recovery</h3>
+              <p className="recovery-card__desc">
+                Follow the individual instructions for activity, lifting and return to normal routines.
+              </p>
+            </article>
+
+            <article className="recovery-card">
+              <div className="recovery-card__icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                  <polyline points="10 9 9 9 8 9" />
+                </svg>
+              </div>
+              <h3 className="recovery-card__title">Follow-up assessments</h3>
+              <p className="recovery-card__desc">
+                Attend scheduled reviews and recommended urinary-flow or imaging tests.
+              </p>
+            </article>
+          </div>
+
+          <div className="recovery-help-callout">
+            <span className="recovery-help-callout__icon" aria-hidden="true">⚠️</span>
+            <div>
+              <h4 className="recovery-help-callout__title">When to seek medical help</h4>
+              <p className="recovery-help-callout__text">
+                Contact your treating team promptly if you experience fever, significant bleeding, catheter problems or worsening symptoms. Inability to pass urine requires urgent medical assessment.
+              </p>
+            </div>
+          </div>
+
+          <div className="sec-block__source">
+            Source basis: AALBEC Manual, Chapters 9–10.
+          </div>
+        </div>
+      </section>
+
+      {/* Consultation Guidance Modal */}
+      {showConsultModal && (
+        <div
+          className="stricture-modal-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="consult-modal-title"
+          onClick={() => setShowConsultModal(false)}
+        >
+          <div
+            className="consult-modal-card"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="stricture-modal__close"
+              onClick={() => setShowConsultModal(false)}
+              aria-label="Close dialog"
+            >
+              ✕
+            </button>
+            <h3 id="consult-modal-title" className="consult-modal-title">
+              Consulting a Specialist Urologist
+            </h3>
+            <p className="consult-modal-desc">
+              Only a qualified urologist can evaluate stricture location, history, and individual suitability for regenerative cell therapy or reconstructive surgery.
+            </p>
+            <div className="consult-modal-steps">
+              <strong>Recommended steps for your consultation:</strong>
+              <ul>
+                <li>Bring prior operative notes (e.g. details of previous DVIU or catheterization).</li>
+                <li>Carry recent Uroflowmetry flow curve reports and imaging (RUG/VCUG).</li>
+                <li>Prepare a list of your current symptoms and their duration.</li>
+                <li>Discuss the potential benefits and limitations of all available options.</li>
+              </ul>
+            </div>
+            <div className="consult-modal-actions">
+              <button
+                type="button"
+                className="btn btn--primary"
+                onClick={() => setShowConsultModal(false)}
+              >
+                Understood
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

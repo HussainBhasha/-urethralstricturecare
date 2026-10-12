@@ -27,7 +27,7 @@ export const SITE_CONFIG = {
 };
 
 export const NAVIGATION = [
-  { label: 'Home', href: '/' },
+  { label: 'Urethral Stricture', href: '/' },
   { label: 'About', href: '/about' },
   { label: 'Services', href: '/services' },
   { label: 'Contact', href: '/contact' }
