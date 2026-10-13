@@ -1,5 +1,6 @@
 import { memo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { FAQS } from '../data/faqsData.js';
 import './Disclaimer.css';
 
 function Disclaimer() {
@@ -111,7 +112,7 @@ function Disclaimer() {
               </p>
               <div className="disclaimer-conclusion__actions">
                 <Link to="/faqs" className="btn btn--primary">
-                  View FAQs (60 Questions)
+                  View FAQs ({FAQS.length} Questions)
                 </Link>
                 <Link to="/" className="btn btn--outline">
                   Return to Home

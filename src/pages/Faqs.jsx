@@ -45,7 +45,7 @@ function Faqs() {
               Frequently Asked <span>Questions</span>
             </h1>
             <p className="faqs-hero__lede">
-              Explore 60 comprehensive answers covering bulbar urethral stricture causes, symptoms, surgical interventions, and advanced AALBEC autologous buccal epithelial cell therapy.
+              Explore {FAQS.length} comprehensive answers covering bulbar urethral stricture causes, symptoms, surgical interventions, and advanced AALBEC autologous buccal epithelial cell therapy.
             </p>
           </div>
         </div>
@@ -66,7 +66,7 @@ function Faqs() {
                   setFaqQuery(e.target.value);
                   setExpandedAll(false);
                 }}
-                placeholder="Search questions or answers (e.g. AALBEC, biopsy, laser, 64)..."
+                placeholder="Search questions or answers (e.g. AALBEC, biopsy, laser)..."
                 aria-label="Search frequently asked questions"
                 className="faqs-search-input"
               />
@@ -148,7 +148,7 @@ function Faqs() {
                     setSelectedCategory('All');
                   }}
                 >
-                  View All 60 Questions
+                  View All {FAQS.length} Questions
                 </button>
               </div>
             )}

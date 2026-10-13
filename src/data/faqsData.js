@@ -192,183 +192,183 @@ export const FAQS = [
     a: 'Strictures in women are rare; this therapy is currently used in men between 18yrs-56yrs.'
   },
   {
-    num: 34,
+    num: 33,
     category: 'Safety & Approvals',
-    q: '34. How do I know if I’m eligible?',
+    q: '33. How do I know if I’m eligible?',
     a: 'Your doctor will assess your stricture and medical condition.'
   },
   {
-    num: 35,
+    num: 34,
     category: 'Safety & Approvals',
-    q: '35. Will it affect my sex life or fertility?',
+    q: '34. Will it affect my sex life or fertility?',
     a: 'No. It does not impact sexual function or fertility.'
   },
   {
-    num: 37,
+    num: 35,
     category: 'Recovery & Care',
-    q: '37. Do I need to stop any medications before?',
+    q: '35. Do I need to stop any medications before?',
     a: 'Possibly. Your doctor will guide you.'
   },
   {
-    num: 38,
+    num: 36,
     category: 'Safety & Approvals',
-    q: '38. What if I have diabetes or high BP?',
+    q: '36. What if I have diabetes or high BP?',
     a: 'AALBEC can still be suitable if your condition is controlled.'
   },
   {
-    num: 39,
+    num: 37,
     category: 'Safety & Approvals',
-    q: '39. Can the cells get rejected?',
+    q: '37. Can the cells get rejected?',
     a: 'No, they are from your own body.'
+  },
+  {
+    num: 38,
+    category: 'Biopsy & Lab',
+    q: '38. Is the mouth biopsy painful?',
+    a: 'No, it\'s done under local anesthesia and heals quickly.'
+  },
+  {
+    num: 39,
+    category: 'Biopsy & Lab',
+    q: '39. Will my speech or eating be affected?',
+    a: 'Most return to normal in 1–2 days.'
   },
   {
     num: 40,
     category: 'Biopsy & Lab',
-    q: '40. Is the mouth biopsy painful?',
-    a: 'No, it\'s done under local anesthesia and heals quickly.'
-  },
-  {
-    num: 41,
-    category: 'Biopsy & Lab',
-    q: '41. Will my speech or eating be affected?',
-    a: 'Most return to normal in 1–2 days.'
-  },
-  {
-    num: 42,
-    category: 'Biopsy & Lab',
-    q: '42. What happens to the cells after implantation?',
+    q: '40. What happens to the cells after implantation?',
     a: 'They stick to the damaged area and help rebuild it.'
   },
   {
-    num: 43,
+    num: 41,
     category: 'Safety & Approvals',
-    q: '43. Is it safe for older people?',
+    q: '41. Is it safe for older people?',
     a: 'Yes, if they’re fit for minor procedures.'
+  },
+  {
+    num: 42,
+    category: 'Recovery & Care',
+    q: '42. What should I eat after the procedure?',
+    a: 'Normal diet, avoiding spicy/hard foods briefly.'
+  },
+  {
+    num: 43,
+    category: 'Recovery & Care',
+    q: '43. Will I need follow-ups?',
+    a: 'Yes. They\'re key to monitoring success.'
   },
   {
     num: 44,
     category: 'Recovery & Care',
-    q: '44. What should I eat after the procedure?',
-    a: 'Normal diet, avoiding spicy/hard foods briefly.'
+    q: '44. Can I travel with a catheter?',
+    a: 'Yes, with care and hygiene.'
   },
   {
     num: 45,
     category: 'Recovery & Care',
-    q: '45. Will I need follow-ups?',
-    a: 'Yes. They\'re key to monitoring success.'
+    q: '45. Can I drive or ride a two-wheeler?',
+    a: 'No. Wait until 6-8 weeks or until your doctor advises.'
   },
   {
     num: 46,
     category: 'Recovery & Care',
-    q: '46. Can I travel with a catheter?',
-    a: 'Yes, with care and hygiene.'
+    q: '46. What if I see blood in urine?',
+    a: 'Mild blood is okay. Needs doctor attention.'
   },
   {
     num: 47,
     category: 'Recovery & Care',
-    q: '47. Can I drive or ride a two-wheeler?',
-    a: 'No. Wait until 6-8 weeks or until your doctor advises.'
+    q: '47. Can I have sex after the procedure?',
+    a: 'After 10 weeks or more and as per your doctor’s advice.'
   },
   {
     num: 48,
-    category: 'Recovery & Care',
-    q: '48. What if I see blood in urine?',
-    a: 'Mild blood is okay. Needs doctor attention.'
+    category: 'Safety & Approvals',
+    q: '48. Will it affect my bladder or kidneys?',
+    a: 'No. It helps protect them by restoring urine flow.'
   },
   {
     num: 49,
     category: 'Recovery & Care',
-    q: '49. Can I have sex after the procedure?',
-    a: 'After 10 weeks or more and as per your doctor’s advice.'
+    q: '49. Can it be done as an outpatient procedure?',
+    a: 'Minimum 24hrs-48hrs stay is required.'
   },
   {
     num: 50,
     category: 'Safety & Approvals',
-    q: '50. Will it affect my bladder or kidneys?',
-    a: 'No. It helps protect them by restoring urine flow.'
+    q: '50. Is it available in small towns?',
+    a: 'Yes'
   },
   {
     num: 51,
     category: 'Recovery & Care',
-    q: '51. Can it be done as an outpatient procedure?',
-    a: 'Minimum 24hrs-48hrs stay is required.'
+    q: '51. How do I know I’m cured?',
+    a: 'Improved symptoms, doctor follow-up tests, and long-term monitoring.'
   },
   {
     num: 52,
-    category: 'Safety & Approvals',
-    q: '52. Is it available in small towns?',
-    a: 'Yes'
+    category: 'Biopsy & Lab',
+    q: '52. What is a buccal graft?',
+    a: 'A buccal graft is a small piece of tissue taken from the inside of your cheek.'
   },
   {
     num: 53,
-    category: 'Recovery & Care',
-    q: '53. How do I know I’m cured?',
-    a: 'Improved symptoms, doctor follow-up tests, and long-term monitoring.'
+    category: 'Biopsy & Lab',
+    q: '53. How many cells are needed for the therapy?',
+    a: 'Generally, about 5 million live buccal epithelial cells are implanted to cover the stricture site. The lab ensures enough cells are grown from a small sample.'
   },
   {
     num: 54,
     category: 'Biopsy & Lab',
-    q: '54. What is a buccal graft?',
-    a: 'A buccal graft is a small piece of tissue taken from the inside of your cheek.'
+    q: '54. How big is the cheek biopsy?',
+    a: 'In AALBEC therapy 0.5-1cm of buccal graft is harvested. It heals quickly with no lasting impact or scar.'
   },
   {
     num: 55,
     category: 'Biopsy & Lab',
-    q: '55. How many cells are needed for the therapy?',
-    a: 'Generally, about 5 million live buccal epithelial cells are implanted to cover the stricture site. The lab ensures enough cells are grown from a small sample.'
+    q: '55. Where are the cells processed?',
+    a: 'The cheek tissue is sent to a specialized, certified laboratory equipped to grow the cells under strict quality and safety conditions.'
   },
   {
     num: 56,
     category: 'Biopsy & Lab',
-    q: '56. How big is the cheek biopsy?',
-    a: 'In AALBEC therapy 0.5-1cm of buccal graft is harvested. It heals quickly with no lasting impact or scar.'
+    q: '56. How long do the cells take to grow?',
+    a: 'It usually takes 3 weeks to culture and prepare the cells for implantation.'
   },
   {
     num: 57,
     category: 'Biopsy & Lab',
-    q: '57. Where are the cells processed?',
-    a: 'The cheek tissue is sent to a specialized, certified laboratory equipped to grow the cells under strict quality and safety conditions.'
+    q: '57. How are the cells transported back to the hospital?',
+    a: 'The lab uses special medical grade temperature-controlled, sterile packaging with date logger to ensure the cells stay alive and uncontaminated during transit.'
   },
   {
     num: 58,
     category: 'Biopsy & Lab',
-    q: '58. How long do the cells take to grow?',
-    a: 'It usually takes 3 weeks to culture and prepare the cells for implantation.'
+    q: '58. Are there any risks in transporting the cells?',
+    a: 'With authorised logistics and handling, the risks are minimal. The system is designed to maintain cell viability throughout the process.'
   },
   {
     num: 59,
     category: 'Biopsy & Lab',
-    q: '59. How are the cells transported back to the hospital?',
-    a: 'The lab uses special medical grade temperature-controlled, sterile packaging with date logger to ensure the cells stay alive and uncontaminated during transit.'
+    q: '59. Do I need to travel to the lab?',
+    a: 'No. The biopsy is taken at your hospital, and the sample is shipped to the lab. You only need to return for the implantation procedure.'
   },
   {
     num: 60,
     category: 'Biopsy & Lab',
-    q: '60. Are there any risks in transporting the cells?',
-    a: 'With authorised logistics and handling, the risks are minimal. The system is designed to maintain cell viability throughout the process.'
-  },
-  {
-    num: 61,
-    category: 'Biopsy & Lab',
-    q: '61. Do I need to travel to the lab?',
-    a: 'No. The biopsy is taken at your hospital, and the sample is shipped to the lab. You only need to return for the implantation procedure.'
-  },
-  {
-    num: 62,
-    category: 'Biopsy & Lab',
-    q: '62. What if the lab can\'t grow enough cells?',
+    q: '60. What if the lab can\'t grow enough cells?',
     a: 'This is rare, but if it happens, your doctor will discuss alternatives or a repeat biopsy if necessary.'
   },
   {
-    num: 63,
+    num: 61,
     category: 'Safety & Approvals',
-    q: '63. Is it new or experimental?',
+    q: '61. Is it new or experimental?',
     a: 'New but proven through clinical trials.'
   },
   {
-    num: 64,
+    num: 62,
     category: 'Safety & Approvals',
-    q: '64. Is it an approved therapy?',
+    q: '62. Is it an approved therapy?',
     a: 'Yes. Approved by the DCGI, Drugs Controller General Of India (Central Drugs Standard Control Organization), Ministry of Health and Family Welfare, Government of India'
   }
 ];
